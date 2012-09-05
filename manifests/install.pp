@@ -16,19 +16,7 @@
 class pureftpd::install {
   case $::osfamily{
     'RedHat': {
-      # On RHEL, we require EPEL
-      package { 'epel-release' :
-        ensure   => 'present',
-        provider => 'rpm',
-        source   => $::lsbmajdistrelease ? {
-          '5' => 'http://mirror.uv.es/mirror/fedora-epel/5/i386/epel-release-5-4.noarch.rpm',
-          '6' => 'http://ftp.tu-chemnitz.de/pub/linux/fedora-epel/6/i386/epel-release-6-7.noarch.rpm'
-        }
-      }
-      package { $pureftpd::params::package_name:
-        ensure  => present,
-        require => Package ['epel-release']
-      }
+      include epel
     }
     'Debian': {
       package { $pureftpd::params::package_name:

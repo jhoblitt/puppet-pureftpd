@@ -1,5 +1,5 @@
 name 'puppet-pureftpd'
-version '1.0.2'
+version '1.0.3'
 
 author '5Ub-Z3r0'
 license 'GPL v3'
@@ -17,3 +17,7 @@ Requirements:
 Todo:
 - complete the config_mysql and config_pgsql defines
 '
+
+## Add dependencies, if any:
+dependency 'stahnma/epel', '>= 0.0.2'
+
