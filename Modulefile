@@ -19,5 +19,3 @@ Todo:
 '
 
 ## Add dependencies, if any:
-dependency 'stahnma/epel', '>= 0.0.2'
-

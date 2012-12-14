@@ -14,16 +14,7 @@
 # 5Ub-Z3r0
 #
 class pureftpd::install {
-  case $::osfamily{
-    'RedHat': {
-      include epel
-    }
-    'Debian': {
-      package { $pureftpd::params::package_name:
-        ensure  => present,
-      }
-    }
-    default: {}
+  package { $pureftpd::params::package_name:
+    ensure  => present,
   }
-
 }
