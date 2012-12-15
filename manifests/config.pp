@@ -66,18 +66,57 @@
 # 5Ub-Z3r0
 #
 define pureftpd::config(
-  $use_selinux         = false,
-  $allow_anonymous     = false,
-  $allow_fxp           = false,
-  $user_bandwidth      = undef,
-  $max_clients_number  = '50',
-  $max_clients_per_ip  = '8',
+  $chrooteveryone      = true,
+  $trustedgid          = '100',
+  $brokenclientscompatibility = false,
+  $maxclientsnumber    = '50',
+  $maxclientsperip     = '8',
+  $verboselog          = false,
+  $displaydotfiles     = true,
+  $anonymousonly       = false,
+  $noanonymous         = false,
+  $syslogfacility      = 'ftp',
+  $fortunesfile        = false,
+  $dontresolve         = true,
+  $maxidletime         = '15',
+  $pamauthentication   = true,
+  $unixauthentication  = false,
+  $limitrecursion      = '10000 8',
+  $anonymouscancreatedirs = false,
+  $maxload             = '4',
+  $passiveportrange    = undef,
+  $forcepassiveip      = undef,
+  $anonymousratio      = undef,
+  $userratio           = undef,
+  $antiwarez           = true,
+  $bind	               = false, # false means bind to ALL
+  $anonymousbandwidth  = false,
+  $userbandwidth       = undef,
   $umask               = '133:022',
-  $min_uid             = '500',
-  $allow_chmod         = false,
-  $use_tls             = false,
-  $force_passive_ip    = undef,
-  $motd_file           = undef
+  $minuid              = '500',
+  $useftpusers         = false,
+  $allowuserfxp        = false,
+  $allowanonymousfxp   = false,
+  $prohibitdotfileswrite = false,
+  $prohibitdotfilesread = false,
+  $autorename          = false,
+  $anonymouscantupload = true,
+  $trustedip           = false,
+  $logpid              = false,
+  $altlog              = 'clf:/var/log/pureftpd.log',
+  $nochmod             = false,
+  $createhomedir       = false,
+  $quota               = false,
+  $maxdiskusage        = '99',
+  $norename            = false,
+  $customerproof       = true,
+  $peruserlimits       = false,
+  $notruncate          = false,
+  $tls                 = false,
+  $ipv4only            = false,
+  $ipv6only            = false,
+
+  $use_selinux         = false,
 ){
 
   class { 'pureftpd':
@@ -86,15 +125,15 @@ define pureftpd::config(
 
   $default_auth  = 'unix'
 
-  if ($motd_file != undef) {
-    file { '/etc/motd.pureftpd':
-      ensure => file,
-      source => $motd_file,
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0644'
-    }
-  }
+#  if ($motd_file != undef) {
+#    file { '/etc/motd.pureftpd':
+#      ensure => file,
+#      source => $motd_file,
+#      owner  => 'root',
+#      group  => 'root',
+#      mode   => '0644'
+#    }
+#  }
 
   file { "${pureftpd::params::config_dir}/pure-ftpd.conf":
     ensure  => file,

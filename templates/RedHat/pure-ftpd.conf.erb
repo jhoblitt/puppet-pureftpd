@@ -17,7 +17,7 @@
 
 # Cage in every user in his home directory
 
-ChrootEveryone              yes
+ChrootEveryone              <% if @chrooteveryone %>yes<% else %>no<% end %>
 
 
 
@@ -25,19 +25,23 @@ ChrootEveryone              yes
 # won't be caged. Others will be. If you don't want chroot()ing anyone,
 # just comment out ChrootEveryone and TrustedGID.
 
+<% if @ChrootEveryone -%>
 # TrustedGID                    100
+<% else -%>
+TrustedGID                  <%= @trustedgid %>
+<% end -%>
 
 
 
 # Turn on compatibility hacks for broken clients
 
-BrokenClientsCompatibility  no
+BrokenClientsCompatibility  <% if @brokenclientscompatibility%>yes<% else %>no<% end %>
 
 
 
 # Maximum number of simultaneous users
 
-MaxClientsNumber            <%= max_clients_number %>
+MaxClientsNumber            <%= @maxclientsnumber %>
 
 
 
@@ -49,45 +53,49 @@ Daemonize                   yes
 
 # Maximum number of sim clients with the same IP address
 
-MaxClientsPerIP             <%= max_clients_per_ip %>
+MaxClientsPerIP             <%= @maxclientsperIP %>
 
 
 
 # If you want to log all client commands, set this to "yes".
 # This directive can be duplicated to also log server responses.
 
-VerboseLog                  no
+VerboseLog                  <% if @verboselog %>yes<% else %>no<% end %>
 
 
 
 # List dot-files even when the client doesn't send "-a".
 
-DisplayDotFiles             no
+DisplayDotFiles             <% if @displaydotfiles %>yes<% else %>no<% end %>
 
 
 
 # Don't allow authenticated users - have a public anonymous FTP only.
 
-AnonymousOnly               no
+AnonymousOnly               <% if @anonymouonly %>yes<% else %>no<% end %>
 
 
 
 # Disallow anonymous connections. Only allow authenticated users.
 
-NoAnonymous                 <% if allow_anonymous %>no<% else %>yes<% end %>
+NoAnonymous                 <% if @noanonymous %>yes<% else %>no<% end %>
 
 
 
 # Syslog facility (auth, authpriv, daemon, ftp, security, user, local*)
 # The default facility is "ftp". "none" disables logging.
 
-SyslogFacility              ftp
+SyslogFacility              <%= @syslogfacility %>
 
 
 
 # Display fortune cookies
 
-<% if @motd_file %> <%else%>#<%end-%>FortunesFile /etc/motd.pureftpd
+<% if @fortunesfile -%>
+FortunesFile                <%= @fortunesfile %>
+<% else -%>
+# FortunesFile              /usr/share/fortune/zippy
+<% end -%>
 
 
 
@@ -95,30 +103,30 @@ SyslogFacility              ftp
 # it uses less bandwidth. Set this to "yes" on very busy servers or
 # if you don't have a working DNS.
 
-DontResolve                 yes
+DontResolve                 <% if @dontresolve %>yes<% else %>no<% end %>
 
 
 
 # Maximum idle time in minutes (default = 15 minutes)
 
-MaxIdleTime                 15
+MaxIdleTime                 <%= @maxidletime %>
 
 
 
 # LDAP configuration file (see README.LDAP)
 
-<% if default_auth != 'ldap' %>#<%end-%>LDAPConfigFile                /etc/pure-ftpd/pureftpd-ldap.conf
+<% if default_auth != 'ldap' %># <% end -%>LDAPConfigFile                /etc/pure-ftpd/pureftpd-ldap.conf
 
 
 
 # MySQL configuration file (see README.MySQL)
 
-<% if default_auth != 'mysql' %>#<%end-%> MySQLConfigFile               /etc/pure-ftpd/pureftpd-mysql.conf
+<% if default_auth != 'mysql' %># <% end -%>MySQLConfigFile               /etc/pure-ftpd/pureftpd-mysql.conf
 
 
 # Postgres configuration file (see README.PGSQL)
 
-<% if default_auth != 'pgsql' %>#<%end-%> PGSQLConfigFile               /etc/pure-ftpd/pureftpd-pgsql.conf
+<% if default_auth != 'pgsql' %># <% end -%>PGSQLConfigFile               /etc/pure-ftpd/pureftpd-pgsql.conf
 
 
 # PureDB user database (see README.Virtual-Users)
@@ -134,13 +142,17 @@ MaxIdleTime                 15
 
 # If you want to enable PAM authentication, uncomment the following line
 
-PAMAuthentication             yes
+PAMAuthentication             <% if @pamauthentication %>yes<% else %>no<% end %>
 
 
 
 # If you want simple Unix (/etc/passwd) authentication, uncomment this
 
+<% if @unixauthentication -%>
+UnixAuthentication            yes
+<% else -%>
 # UnixAuthentication            yes
+<% end -%>
 
 
 
@@ -158,26 +170,30 @@ PAMAuthentication             yes
 # 'ls' recursion limits. The first argument is the maximum number of
 # files to be displayed. The second one is the max subdirectories depth
 
-LimitRecursion              10000 8
+LimitRecursion              <%= @limitrecursion %>
 
 
 
 # Are anonymous users allowed to create new directories ?
 
-AnonymousCanCreateDirs      no
+AnonymousCanCreateDirs      <% if @anonymouscancreateDirs %>yes<% else %>no<% end %>
 
 
 
 # If the system is more loaded than the following value,
 # anonymous users aren't allowed to download.
 
-MaxLoad                     4
+MaxLoad                     <%= @maxload %>
 
 
 
-# Port range for passive connections replies. - for firewalling.
+# port range for passive connections replies. - for firewalling.
 
+<% if @passiveportrange -%>
+PassivePortRange            <%= @passiveportrange %>
+<% else -%>
 # PassivePortRange          30000 50000
+<% end -%>
 
 
 
@@ -185,78 +201,102 @@ MaxLoad                     4
 # Symbolic host names are also accepted for gateways with dynamic IP
 # addresses.
 
-<%if @force_passive_ip%>ForcePassiveIP <%=force_passive_ip%><%else%>#ForcePassiveIP 192.168.0.1<%end-%>
+<% if @forcepassiveiP -%>
+ForcePassiveIP                <%= @forcepassiveiP %>
+<% else -%>
+# ForcePassiveIP                192.168.0.1
+<% end -%>
 
 
 
 # Upload/download ratio for anonymous users.
 
+<% if @anonymousratio -%>
+AnonymousRatio                <%= @anonymousratio %>
+<% else -%>
 # AnonymousRatio                1 10
+<% end -%>
 
 
 
 # Upload/download ratio for all users.
 # This directive superscedes the previous one.
 
+<% if @userratio -%>
+UserRatio                     <%= @userratio %>
+<% else -%>
 # UserRatio                 1 10
+<% end -%>
 
 
 
 # Disallow downloading of files owned by "ftp", ie.
 # files that were uploaded but not validated by a local admin.
 
-AntiWarez                   yes
+AntiWarez                   <% if @antiwarez %>yes<% else %>no<% end %>
 
 
 
 # IP address/port to listen to (default=all IP and port 21).
 
+<% if @bind -%>
+bind                        <%= @bind %>
+<% else -%>
 # Bind                      127.0.0.1,21
+<% end -%>
 
 
 
 # Maximum bandwidth for anonymous users in KB/s
 
+<% if @anonymousbandwidth -%>
+AnonymousBandwidth          <%= @anonymousbandwidth %>
+<% else -%>
 # AnonymousBandwidth            8
+<% end -%>
 
 
 
 # Maximum bandwidth for *all* users (including anonymous) in KB/s
 # Use AnonymousBandwidth *or* UserBandwidth, both makes no sense.
 
-<% if @user_bandwidth %>UserBandwidth  <%= user_bandwidth %><%else%>#UserBandwidth  0<%end-%>
+<% if @userbandwidth -%>
+UserBandwidth               <%= @userbandwidth %>
+<% else -%>
+# UserBandwidth             8
+<% end -%>
 
 
 
 # File creation mask. <umask for files>:<umask for dirs> .
 # 177:077 if you feel paranoid.
 
-Umask                       <%= umask %>
+Umask                       <%= @umask %>
 
 
 
-# Minimum UID for an authenticated user to log in.
+# minimum UID for an authenticated user to log in.
 
-MinUID                      <%= min_uid %>
+MinUID                      <%= @minuid %>
 
 
 
-# Do not use the /etc/ftpusers file to disable accounts. We're already
+# do not use the /etc/ftpusers file to disable accounts. We're already
 # using MinUID to block users with uid < 500
 
-UseFtpUsers no
+UseFtpUsers <% if @useftpusers %>yes<% else %>no<% end %>
 
 
 
 # Allow FXP transfers for authenticated users.
 
-AllowUserFXP                <% if allow_fxp %>yes<% else %>no<% end -%>
+AllowUserFXP                <% if @allowuserfxp %>yes<% else %>no<% end %>
 
 
 
 # Allow anonymous FXP for anonymous and non-anonymous users.
 
-AllowAnonymousFXP           <% if allow_anonymous && allow_fxp %>yes<% else %>no<% end -%>
+AllowAnonymousFXP           <% if @allowanonymousFXP %>yes<% else %>no<% end %>
 
 
 
@@ -264,26 +304,26 @@ AllowAnonymousFXP           <% if allow_anonymous && allow_fxp %>yes<% else %>no
 # even if they own them. If TrustedGID is enabled, this group
 # will have access to dot-files, though.
 
-ProhibitDotFilesWrite       no
+ProhibitDotFilesWrite       <% if @prohibitdotfilesWrite %>yes<% else %>no<% end %>
 
 
 
 # Prohibit *reading* of files beginning with a dot (.history, .ssh...)
 
-ProhibitDotFilesRead        no
+ProhibitDotFilesRead        <% if @prohibitdotfilesRead %>yes<% else %>no<% end %>
 
 
 
 # Never overwrite files. When a file whoose name already exist is uploaded,
 # it get automatically renamed to file.1, file.2, file.3, ...
 
-AutoRename                  no
+AutoRename                  <% if @autorename %>yes<% else %>no<% end %>
 
 
 
 # Disallow anonymous users to upload new files (no = upload is allowed)
 
-AnonymousCantUpload         yes
+AnonymousCantUpload         <% if @anonymouscantUpload %>yes<% else %>no<% end %>
 
 
 
@@ -293,14 +333,22 @@ AnonymousCantUpload         yes
 # You can also only allow a non-routable local IP (like 10.x.x.x) to
 # authenticate, and keep a public anon-only FTP server on another IP.
 
+<% if @userratio -%>
+TrustedIP                   <%= @trustedip %>
+<% else -%>
 #TrustedIP                  10.1.1.1
+<% end -%>
 
 
 
 # If you want to add the PID to every logged line, uncomment the following
 # line.
 
+<% if @logpid -%>
+logPID                     yes
+<% else -%>
 #LogPID                     yes
+<% end -%>
 
 
 
@@ -328,19 +376,31 @@ AltLog                     clf:/var/log/pureftpd.log
 
 # Disallow the CHMOD command. Users can't change perms of their files.
 
-NoChmod                     <% if allow_chmod %>no<% else %>yes<% end -%>
+<% if @nochmod -%>
+noChmod                     yes
+<% else -%>
+#NoChmod                     yes
+<% end -%>
 
 
 
 # Allow users to resume and upload files, but *NOT* to delete them.
 
+<% if @keepallfiles -%>
+KeepAllFiles                yes
+<% else -%>
 #KeepAllFiles                yes
+<% end -%>
 
 
 
 # Automatically create home directories if they are missing
 
+<% if @createhomedir -%>
+CreateHomeDir               yes
+<% else -%>
 #CreateHomeDir               yes
+<% end -%>
 
 
 
@@ -348,7 +408,11 @@ NoChmod                     <% if allow_chmod %>no<% else %>yes<% end -%>
 # The second number is the max size of megabytes.
 # So 1000:10 limits every user to 1000 files and 10 Mb.
 
+<% if @quota -%>
+quota                       <%= @quota %>
+<% else -%>
 #Quota                       1000:10
+<% end -%>
 
 
 
@@ -374,13 +438,17 @@ NoChmod                     <% if allow_chmod %>no<% else %>yes<% end -%>
 # the log files. When the partition is more that X percent full,
 # new uploads are disallowed.
 
-MaxDiskUsage               99
+MaxDiskUsage               <%= @maxdiskusage %>
 
 
 
 # Set to 'yes' if you don't want your users to rename files.
 
+<% if @norename -%>
+noRename                  yes
+<% else -%>
 #NoRename                  yes
+<% end -%>
 
 
 
@@ -390,7 +458,7 @@ MaxDiskUsage               99
 # with silly issues. If you're sure all your users have some basic Unix
 # knowledge, this feature is useless. If you're a hosting service, enable it.
 
-CustomerProof              yes
+CustomerProof              <% if @customerproof %>yes<% else %>no<% end %>
 
 
 
@@ -401,7 +469,11 @@ CustomerProof              yes
 # For instance, 3:20 means that the same authenticated user can have 3 active
 # sessions max. And there are 20 anonymous sessions max.
 
+<% if @peruserlimits -%>
+PerUserLimits            <%= @peruserlimits %>
+<% else -%>
 # PerUserLimits            3:20
+<% end -%>
 
 
 
@@ -413,7 +485,11 @@ CustomerProof              yes
 # immediatly switch to the new one as soon as the full file will have been
 # transfered. This option is incompatible with virtual quotas.
 
+<% if @notruncate -%>
+NoTruncate               yes
+<% else -%>
 # NoTruncate               yes
+<% end -%>
 
 
 
@@ -427,21 +503,33 @@ CustomerProof              yes
 # 2) A valid certificate is in place,
 # 3) Only compatible clients will log in.
 
-TLS                      <% if use_tls %>1<%else%>0<%end-%>
+<% if @tls -%>
+tls                      <%= @tls %>
+<% else -%>
+# TLS                      1
+<% end -%>
 
 
 
 # Listen only to IPv4 addresses in standalone mode (ie. disable IPv6)
 # By default, both IPv4 and IPv6 are enabled.
 
+<% if @ipv4only -%>
+iPV4Only                 yes
+<% else -%>
 # IPV4Only                 yes
+<% end -%>
 
 
 
 # Listen only to IPv6 addresses in standalone mode (ie. disable IPv4)
 # By default, both IPv4 and IPv6 are enabled.
 
+<% if @ipv6only -%>
+iPV6Only                 yes
+<% else -%>
 # IPV6Only                 yes
+<% end -%>
 
 # UTF-8 support for file names (RFC 2640)
 # Define charset of the server filesystem and optionnally the default charset
