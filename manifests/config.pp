@@ -65,7 +65,7 @@
 #
 # 5Ub-Z3r0
 #
-define pureftpd::config(
+class pureftpd::config(
   $chrooteveryone      = true,
   $trustedgid          = '100',
   $brokenclientscompatibility = false,
