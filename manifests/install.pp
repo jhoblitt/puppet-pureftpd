@@ -13,7 +13,7 @@
 #
 # 5Ub-Z3r0
 #
-class pureftpd::install {
+class pureftpd::install inherits pureftpd::params {
   package { $pureftpd::params::package_name:
     ensure  => present,
   }

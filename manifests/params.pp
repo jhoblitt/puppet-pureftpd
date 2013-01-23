@@ -21,7 +21,7 @@
 #
 # 5Ub-Z3r0
 #
-class pureftpd::params {
+class pureftpd::params inherits pureftpd {
   case $::osfamily {
     'RedHat':{
       $package_name = $pureftpd::use_selinux ?{

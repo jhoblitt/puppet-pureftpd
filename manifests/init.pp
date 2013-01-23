@@ -19,6 +19,11 @@
 #
 class pureftpd (
   $use_selinux=false
-){
-  include pureftpd::params, pureftpd::install, pureftpd::service
+) {
+  include pureftpd::install, pureftpd::config, pureftpd::service
+
+  Class[ 'pureftpd::install' ] ->
+  Class[ 'pureftpd::config' ] ->
+  Class[ 'pureftpd::service' ] ->
+  Class[ 'pureftpd' ]
 }

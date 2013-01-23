@@ -115,13 +115,7 @@ class pureftpd::config(
   $tls                 = false,
   $ipv4only            = false,
   $ipv6only            = false,
-
-  $use_selinux         = false,
-){
-
-  class { 'pureftpd':
-    use_selinux => $use_selinux
-  }
+) inherits pureftpd::params {
 
   $default_auth  = 'unix'
 
