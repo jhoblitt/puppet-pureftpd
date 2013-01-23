@@ -23,8 +23,6 @@
 #
 class pureftpd::params {
   case $::osfamily {
-    'Debian':{
-    }
     'RedHat':{
       $package_name = $pureftpd::use_selinux ?{
         true    => 'pure-ftpd-selinux',
