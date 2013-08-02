@@ -4,17 +4,27 @@
 #
 # === Parameters
 #
-# === Actions
-#
-# - if the os family is RedHat, fetch and install the EPEL release file
-# - Install the pure-ftpd server on the system
+# [*use_selinux*]
+#   Optional, defaults to false.
+#   Manages whether or not to enable the selinux extensions.
 #
 # === Authors
 #
 # 5Ub-Z3r0
+# Joshua Hoblitt <jhoblitt@cpan.org>
 #
-class pureftpd::install inherits pureftpd::params {
-  package { $pureftpd::params::package_name:
+
+class pureftpd::install (
+  $use_selinux = false,
+) inherits pureftpd::params {
+
+  if ($use_selinux) {
+    $package_name = $pureftpd::params::package_name_selinux
+  } else {
+    $package_name = $pureftpd::params::package_name
+  }
+
+  package { $package_name:
     ensure  => present,
   }
 }

@@ -2,32 +2,18 @@
 #
 # This class manages common server parameters for the pure-ftpd server
 #
-# === Parameters
-#
-# [*config_dir*]
-# The storage area for the config files.
-#
-# [*package_name*]
-# The name of the pure-ftpd package.
-#
-# [*service_name*]
-# The name of the pure-ftpd service
-#
-# === TODO
-#
-# - Add debian support for the module
-#
 # === Authors
 #
 # 5Ub-Z3r0
+# Joshua Hoblitt <jhoblitt@cpan.org>
 #
-class pureftpd::params inherits pureftpd {
+
+class pureftpd::params {
   case $::osfamily {
-    'RedHat':{
-      $package_name = $pureftpd::use_selinux ?{
-        true    => ['pure-ftpd', 'pure-ftpd-selinux'],
-        default => 'pure-ftpd'
-      }
+    'RedHat': {
+      $package_name         = 'pure-ftpd'
+      $package_name_selinux = ['pure-ftpd', 'pure-ftpd-selinux']
+
       $config_dir      = '/etc/pure-ftpd'
       $service_name    = 'pure-ftpd'
 
@@ -44,7 +30,7 @@ class pureftpd::params inherits pureftpd {
       $pgsql_conf_path = "${config_dir}/pureftpd-pgsql.conf"
     }
     default:{
-      fail ("The module is not available for ${::os_family}")
+      fail("Module ${module_name} is not supported on ${::operatingsystem}")
     }
   }
 }

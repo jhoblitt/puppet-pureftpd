@@ -103,15 +103,37 @@
 # 5Ub-Z3r0
 #
 class pureftpd::config_ldap (
-  $ldap_port           = '389',
-  $ldap_usetls         = false,
-  $ldap_server,
-  $ldap_basedn,
-  $ldap_binddn         = '',
-  $ldap_bindpw         = '',
-  $ldap_filter,
-  $ldap_authmethod
-) {
+  $ldapport            = undef,
+  $ldapbinddn          = undef,
+  $ldapbindpw          = undef,
+  $ldapbasedn          = undef,
+  $ldapfilter          = undef,
+  $ldaphomedir         = undef,
+  $ldapversion         = undef,
+  $ldapdefaultuid      = undef,
+  $ldapforcedefaultuid = undef,
+  $ldapdefaultgid      = undef,
+  $ldapforcedefaultgid = undef,
+  $ldapusetls          = undef,
+  $ldapauthmethod      = undef,
+) inherits pureftpd::params {
+
+  # the complete list of options is defined in pure-ftpd/src/log_ldap_p.h
+  $ldap_conf_options = [
+    'LDAPPort',
+    'LDAPBindDN',
+    'LDAPBindPW',
+    'LDAPBaseDN',
+    'LDAPFilter',
+    'LDAPHomeDir',
+    'LDAPVersion',
+    'LDAPDefaultUID',
+    'LDAPForceDefaultUID',
+    'LDAPDefaultGID',
+    'LDAPForceDefaultGID',
+    'LDAPUseTLS',
+    'LDAPAuthMethod',
+  ]
 
   file { $pureftpd::params::ldap_conf_path:
     ensure  => file,
