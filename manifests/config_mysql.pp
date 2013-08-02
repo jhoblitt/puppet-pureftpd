@@ -83,9 +83,9 @@ class pureftpd::config_mysql (
   $motd_file           = undef
 ) {
 
-  file { "${pureftpd::params::config_dir}/pureftpd-mysql.conf":
+  file { $pureftpd::params::mysql_conf_path:
     ensure  => file,
-    content => template("${module_name}/${::osfamily}/pureftpd-mysql.conf.erb"),
+    content => template("${module_name}/${pureftpd::params::mysql_conf_erb}"),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',

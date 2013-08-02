@@ -83,9 +83,9 @@ class pureftpd::config_pgsql (
   $motd_file           = undef
 ) {
 
-  file { "${pureftpd::params::config_dir}/pureftpd-pgsql.conf":
+  file { $pureftpd::params::pgsql_conf_path:
     ensure  => file,
-    content => template("${module_name}/${::osfamily}/pureftpd-pgsql.conf.erb"),
+    content => template("${module_name}/${pureftpd::params::pgsql_conf_erb}"),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',

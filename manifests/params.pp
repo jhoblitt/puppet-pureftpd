@@ -28,8 +28,20 @@ class pureftpd::params inherits pureftpd {
         true    => ['pure-ftpd', 'pure-ftpd-selinux'],
         default => 'pure-ftpd'
       }
-      $config_dir = '/etc/pure-ftpd'
-      $service_name = 'pure-ftpd'
+      $config_dir      = '/etc/pure-ftpd'
+      $service_name    = 'pure-ftpd'
+
+      $conf_erb        = 'redhat/pure-ftpd.conf.erb'
+      $conf_path       = "${config_dir}/pure-ftpd.conf"
+
+      $ldap_conf_erb   = 'redhat/pureftpd-ldap.conf.erb'
+      $ldap_conf_path  = "${config_dir}/pureftpd-ldap.conf"
+
+      $mysql_conf_erb  = 'redhat/pureftpd-mysql.conf.erb'
+      $mysql_conf_path = "${config_dir}/pureftpd-mysql.conf"
+
+      $pgsql_conf_erb  = 'redhat/pureftpd-pgsql.conf.erb'
+      $pgsql_conf_path = "${config_dir}/pureftpd-pgsql.conf"
     }
     default:{
       fail ("The module is not available for ${::os_family}")

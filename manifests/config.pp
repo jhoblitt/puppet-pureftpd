@@ -120,9 +120,9 @@ class pureftpd::config(
   $ipv6only            = false,
 ) inherits pureftpd::params {
 
-  file { "${pureftpd::params::config_dir}/pure-ftpd.conf":
+  file { $pureftpd::params::conf_path:
     ensure  => file,
-    content => template("${module_name}/${::osfamily}/pure-ftpd.conf.erb"),
+    content => template("${module_name}/${pureftpd::params::conf_erb}"),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',

@@ -102,7 +102,7 @@
 #
 # 5Ub-Z3r0
 #
-class 'pureftpd::config_ldap' (
+class pureftpd::config_ldap (
   $ldap_port           = '389',
   $ldap_usetls         = false,
   $ldap_server,
@@ -113,9 +113,9 @@ class 'pureftpd::config_ldap' (
   $ldap_authmethod
 ) {
 
-  file { "${pureftpd::params::config_dir}/pureftpd-ldap.conf":
+  file { $pureftpd::params::ldap_conf_path:
     ensure  => file,
-    content => template("${module_name}/${::osfamily}/pureftpd-ldap.conf.erb"),
+    content => template("${module_name}/${pureftpd::params::ldap_conf_erb}"),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
