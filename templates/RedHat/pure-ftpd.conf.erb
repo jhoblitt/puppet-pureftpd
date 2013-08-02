@@ -115,18 +115,18 @@ MaxIdleTime                 <%= @maxidletime %>
 
 # LDAP configuration file (see README.LDAP)
 
-<% if default_auth != 'ldap' %># <% end -%>LDAPConfigFile                /etc/pure-ftpd/pureftpd-ldap.conf
+<% if not @ldapconfigfile %># <% end -%>LDAPConfigFile                /etc/pure-ftpd/pureftpd-ldap.conf
 
 
 
 # MySQL configuration file (see README.MySQL)
 
-<% if default_auth != 'mysql' %># <% end -%>MySQLConfigFile               /etc/pure-ftpd/pureftpd-mysql.conf
+<% if not @mysqlconfigfile %># <% end -%>MySQLConfigFile               /etc/pure-ftpd/pureftpd-mysql.conf
 
 
 # Postgres configuration file (see README.PGSQL)
 
-<% if default_auth != 'pgsql' %># <% end -%>PGSQLConfigFile               /etc/pure-ftpd/pureftpd-pgsql.conf
+<% if not @pgsqlconfigfile %># <% end -%>PGSQLConfigFile               /etc/pure-ftpd/pureftpd-pgsql.conf
 
 
 # PureDB user database (see README.Virtual-Users)

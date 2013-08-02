@@ -79,6 +79,9 @@ class pureftpd::config(
   $fortunesfile        = false,
   $dontresolve         = true,
   $maxidletime         = '15',
+  $ldapconfigfile      = false,
+  $mysqlconfigfile     = false,
+  $pgsqlconfigfile     = false,
   $pamauthentication   = true,
   $unixauthentication  = false,
   $limitrecursion      = '10000 8',
@@ -116,18 +119,6 @@ class pureftpd::config(
   $ipv4only            = false,
   $ipv6only            = false,
 ) inherits pureftpd::params {
-
-  $default_auth  = 'unix'
-
-#  if ($motd_file != undef) {
-#    file { '/etc/motd.pureftpd':
-#      ensure => file,
-#      source => $motd_file,
-#      owner  => 'root',
-#      group  => 'root',
-#      mode   => '0644'
-#    }
-#  }
 
   file { "${pureftpd::params::config_dir}/pure-ftpd.conf":
     ensure  => file,
