@@ -102,19 +102,7 @@
 #
 # 5Ub-Z3r0
 #
-define pureftpd::config_ldap(
-  $use_selinux         = false,
-  $allow_anonymous     = false,
-  $allow_fxp           = false,
-  $user_bandwidth      = undef,
-  $max_clients_number  = '50',
-  $max_clients_per_ip  = '8',
-  $umask               = '133:022',
-  $min_uid             = '500',
-  $allow_chmod         = false,
-  $use_tls             = false,
-  $force_passive_ip    = undef,
-  $motd_file           = undef,
+class 'pureftpd::config_ldap' (
   $ldap_port           = '389',
   $ldap_usetls         = false,
   $ldap_server,
@@ -123,32 +111,7 @@ define pureftpd::config_ldap(
   $ldap_bindpw         = '',
   $ldap_filter,
   $ldap_authmethod
-){
-
-  class { 'pureftpd':
-    use_selinux => $use_selinux
-  }
-
-  $default_auth = 'ldap'
-
-  if ($motd_file != undef) {
-    file { '/etc/motd.pureftpd':
-      ensure => file,
-      source => $motd_file,
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0644'
-    }
-  }
-
-  file { "${pureftpd::params::config_dir}/pure-ftpd.conf":
-    ensure  => file,
-    content => template("${module_name}/${::osfamily}/pure-ftpd.conf.erb"),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    notify  => Service[$pureftpd::params::service_name]
-  }
+) {
 
   file { "${pureftpd::params::config_dir}/pureftpd-ldap.conf":
     ensure  => file,
