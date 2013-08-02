@@ -25,7 +25,7 @@ class pureftpd::params inherits pureftpd {
   case $::osfamily {
     'RedHat':{
       $package_name = $pureftpd::use_selinux ?{
-        true    => 'pure-ftpd-selinux',
+        true    => ['pure-ftpd', 'pure-ftpd-selinux'],
         default => 'pure-ftpd'
       }
       $config_dir = '/etc/pure-ftpd'
