@@ -68,7 +68,7 @@
 # === TODO:
 # - implement template and variables for the pgsql config file
 #
-define pureftpd::config_pgsql(
+class pureftpd::config_pgsql (
   $use_selinux         = false,
   $allow_anonymous     = false,
   $allow_fxp           = false,
@@ -81,32 +81,7 @@ define pureftpd::config_pgsql(
   $use_tls             = false,
   $force_passive_ip    = undef,
   $motd_file           = undef
-){
-
-  class { 'pureftpd':
-    use_selinux => $use_selinux
-  }
-
-  $default_auth = 'pgsql'
-
-  if ($motd_file != undef) {
-    file { '/etc/motd.pureftpd':
-      ensure => file,
-      source => $motd_file,
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0644'
-    }
-  }
-
-  file { "${pureftpd::params::config_dir}/pure-ftpd.conf":
-    ensure  => file,
-    content => template("${module_name}/${::osfamily}/pure-ftpd.conf.erb"),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    notify  => Service[$pureftpd::params::service_name]
-  }
+) {
 
   file { "${pureftpd::params::config_dir}/pureftpd-pgsql.conf":
     ensure  => file,
@@ -116,5 +91,4 @@ define pureftpd::config_pgsql(
     mode    => '0644',
     notify  => Service[$pureftpd::params::service_name]
   }
-
 }
