@@ -1,4 +1,4 @@
-# == Class: pureftpd::config_pgsql
+# == Class: pureftpd::config::pgsql
 #
 # This module manages the pure-ftpd configuration files with pgsql
 # authentication
@@ -13,7 +13,7 @@
 # - implement template and variables for the pgsql config file
 #
 
-class pureftpd::config_pgsql inherits pureftpd::params {
+class pureftpd::config::pgsql inherits pureftpd::params {
 
   file { $pureftpd::params::pgsql_conf_path:
     ensure  => file,

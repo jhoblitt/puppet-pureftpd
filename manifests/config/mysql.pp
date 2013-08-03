@@ -1,4 +1,4 @@
-# == Class: pureftpd::config
+# == Class: pureftpd::config::mysql
 #
 # This module manages the pure-ftpd configuration files with mysql
 # authentication
@@ -16,7 +16,7 @@
 # - implement template and variables for the mysql config file
 #
 
-class pureftpd::config_mysql inherits pureftpd::params {
+class pureftpd::config::mysql inherits pureftpd::params {
 
   file { $pureftpd::params::mysql_conf_path:
     ensure  => file,

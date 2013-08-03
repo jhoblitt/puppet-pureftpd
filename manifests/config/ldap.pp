@@ -1,4 +1,4 @@
-# == Class: pureftpd::config
+# == Class: pureftpd::config::ldap
 #
 # This module manages the pure-ftpd configuration files with LDAP
 # authentication
@@ -12,7 +12,7 @@
 # Joshua Hoblitt <jhoblitt@cpan.org>
 #
 
-class pureftpd::config_ldap (
+class pureftpd::config::ldap (
   $ldapport            = undef,
   $ldapbinddn          = undef,
   $ldapbindpw          = undef,

@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe 'pureftpd::config_ldap' do
+describe 'pureftpd::config::ldap' do
   let(:facts) {{ :osfamily=> 'RedHat' }}
 
   describe 'with no params' do
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file').with_content('')
     end
@@ -14,7 +14,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapport' do
     let(:params) {{ :ldapport => '389' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPPort            389/)
@@ -24,7 +24,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapbinddn' do
     let(:params) {{ :ldapbinddn => 'cn=Manager,dc=c9x,dc=org' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPBindDN          cn=Manager,dc=c9x,dc=org/)
@@ -34,7 +34,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapbindpw' do
     let(:params) {{ :ldapbindpw => 'r00tPaSsw0rD' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPBindPW          r00tPaSsw0rD/)
@@ -44,7 +44,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapbasedn' do
     let(:params) {{ :ldapbasedn => 'cn=Users,dc=c9x,dc=org' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPBaseDN          cn=Users,dc=c9x,dc=org/)
@@ -54,7 +54,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapfilter' do
     let(:params) {{ :ldapfilter => '(&(objectClass=posixAccount)(uid=\L))' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(Regexp.new(Regexp.quote('LDAPFilter          (&(objectClass=posixAccount)(uid=\L))')))
@@ -64,7 +64,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldaphomedir' do
     let(:params) {{ :ldaphomedir => 'homeDirectory' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPHomeDir         homeDirectory/)
@@ -74,7 +74,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapversion' do
     let(:params) {{ :ldapversion => '3' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPVersion         3/)
@@ -84,7 +84,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapdefaultuid' do
     let(:params) {{ :ldapdefaultuid => '100' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPDefaultUID      100/)
@@ -94,7 +94,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapforcedefaultuid' do
     let(:params) {{ :ldapforcedefaultuid => 'False' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPForceDefaultUID False/)
@@ -104,7 +104,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapdefaultgid' do
     let(:params) {{ :ldapdefaultgid => '100' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPDefaultGID      100/)
@@ -114,7 +114,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapdefaultgid' do
     let(:params) {{ :ldapdefaultgid => '100' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPDefaultGID      100/)
@@ -124,7 +124,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapforcedefaultgid' do
     let(:params) {{ :ldapforcedefaultgid => 'False' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPForceDefaultGID False/)
@@ -134,7 +134,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapusetls' do
     let(:params) {{ :ldapusetls => 'False' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPUseTLS          False/)
@@ -144,7 +144,7 @@ describe 'pureftpd::config_ldap' do
   describe 'with ldapauthmethod' do
     let(:params) {{ :ldapauthmethod => 'PASSWORD' }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPAuthMethod      PASSWORD/)
@@ -170,7 +170,7 @@ describe 'pureftpd::config_ldap' do
       :ldapauthmethod => 'PASSWORD',
     }}
     it do
-      should contain_class('pureftpd::config_ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(/^LDAPPort            389/) \
