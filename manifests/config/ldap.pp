@@ -29,7 +29,7 @@ class pureftpd::config::ldap (
 ) inherits pureftpd::params {
 
   # the complete list of options is defined in pure-ftpd/src/log_ldap_p.h
-  $ldap_conf_options = [
+  $conf_options = [
     'LDAPPort',
     'LDAPBindDN',
     'LDAPBindPW',

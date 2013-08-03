@@ -1,6 +1,0 @@
-<% vars = scope.to_hash -%>
-<% @ldap_conf_options.each do |option| -%>
-<%  if vars.has_key?(option.downcase) -%>
-<%=     "%-20s%s" % [option, vars[option.downcase]] %>
-<%  end -%>
-<% end -%>
