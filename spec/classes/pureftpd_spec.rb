@@ -88,7 +88,7 @@ describe 'pureftpd', :type => :class do
       should include_class('pureftpd::service') 
       should contain_package('pure-ftpd').with_ensure('present')
       should_not contain_package('pure-ftpd-selinux')
-      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file')
+      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file')\
         .with_content(<<-END.gsub(/^\s+/, ""))
         IPV4Only            No
         Daemonize           Yes
