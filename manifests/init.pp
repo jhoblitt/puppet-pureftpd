@@ -8,16 +8,25 @@
 #   Optional, defaults to false.
 #   Manages whether or not to enable the selinux extensions.
 #
+# [*config*]
+#   Optional, defaults to `{}`.
+#
 # === Authors
 #
 # 5Ub-Z3r0
 #
 class pureftpd (
-  $use_selinux=false
+  $use_selinux = false,
+  $config      = {},
 ) {
-  include pureftpd::config, pureftpd::service
+  validate_bool($use_selinux)
+  validate_hash($config)
+
+  include pureftpd::service
 
   class{ 'pureftpd::install': use_selinux => $use_selinux }
+
+  create_resources( 'class', { 'pureftpd::config' => $config } ) 
 
   Class[ 'pureftpd::install' ] ->
   Class[ 'pureftpd::config' ] ->

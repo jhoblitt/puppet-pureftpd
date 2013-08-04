@@ -1,24 +1,43 @@
-# puppet-pureftpd
+Puppet pureftpd Module
+======================
 
 [![Build Status](https://travis-ci.org/jhoblitt/puppet-pureftpd.png)](https://travis-ci.org/jhoblitt/puppet-pureftpd)
 
-Manage Pure-FTPd via Puppet on RHEL systems
 
-## How to use
+Description
+-----------
 
-### Unix authentication with default configuration
+This is a puppet module for installation and configuration of the `pure-ftpd`
+software.
 
-```
-  class { 'pureftpd': }
-```
 
-### Different authentication type
+Examples
+--------
 
-```
-  pureftpd::config{ 'ftp':
-    auth_type => mysql,
-  }
-```
+### Basic
+
+Install `pure-ftpd` with an empty `pure-ftpd.conf` config file (accepting all
+defaults) and start `pure-ftpd` as a stand alone daemon.
+
+    class { 'pureftpd': }
+
+### Selinux support
+
+    class { 'pureftpd':
+      use_selinux => true,
+    }
+
+### Setting configuration options
+
+    class { 'pureftpd':
+      use_selinux => true,
+      config      => {
+        ipv4only         => 'Yes',
+        passiveportrange => '49999:59999',
+      }
+    }
+
+### Enabling LDAP authentication
 
 ```
   pureftpd::config_ldap { 'ftp-server':
