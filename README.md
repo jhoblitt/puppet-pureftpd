@@ -1,5 +1,7 @@
 # puppet-pureftpd
 
+[![Build Status](https://travis-ci.org/jhoblitt/puppet-pureftpd.png)](https://travis-ci.org/jhoblitt/puppet-pureftpd)
+
 Manage Pure-FTPd via Puppet on RHEL systems
 
 ## How to use
