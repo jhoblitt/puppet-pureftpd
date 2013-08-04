@@ -26,7 +26,7 @@ class pureftpd (
 
   class{ 'pureftpd::install': use_selinux => $use_selinux }
 
-  create_resources( 'class', { 'pureftpd::config' => $config } ) 
+  create_resources( 'class', { 'pureftpd::config' => $config } )
 
   Class[ 'pureftpd::install' ] ->
   Class[ 'pureftpd::config' ] ->
