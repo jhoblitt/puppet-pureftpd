@@ -39,20 +39,29 @@ defaults) and start `pure-ftpd` as a stand alone daemon.
 
 ### Enabling LDAP authentication
 
-```
-  pureftpd::config_ldap { 'ftp-server':
-    ldap_server     => '192.168.100.10',
-    ldap_basedn     => 'ou=Users,dc=company,dc=com',
-    ldap_filter     => '(&(objectClass=posixAccount)(uid=\L))',
-    ldap_authmethod => 'BIND'
-    user_bandwidth  => '1800:1800'
-  }
-```
-```
-  pureftpd::config_pgsql { 'ftp-server':
-    user_bandwidth  => '1800:1800'
-  }
-```
+    class { 'pureftpd':
+      use_selinux => true,
+      config      => {
+        ipv4only         => 'Yes',
+        passiveportrange => '49999:59999',
+      }
+      config_ldap => {
+        $ldapserver      => 'ldap.example.com',
+        $ldapauthmethod  => 'PASSWORD',
+        $ldapport        => '389',
+        $ldapbinddn      => 'cn=Manager,dc=c9x,dc=org',
+        $ldapbindpw      => 'r00tPaSsw0rD',
+        $ldapbasedn      => 'cn=Users,dc=c9x,dc=org',
+        $ldapfilter      => '(&(objectClass=posixAccount)(uid=\L))',
+        $ldaphomedir     => 'homeDirectory',
+        $ldapversion     => '3',
+        $ldapdefaultuid  => '100',
+        $ldapdefaultgid  => '100',
+        $ldapdefaultgid  => '100',
+        $ldapusetls      => 'False',
+        $ldapauthmethod  => 'PASSWORD',
+      }
+    }
 
 ### TODO
 - add a configuration switch for the pem certificate file, in case TLS is used

@@ -11,7 +11,8 @@ describe 'pureftpd', :type => :class do
       should include_class('pureftpd::service') 
       should contain_package('pure-ftpd').with_ensure('present')
       should_not contain_package('pure-ftpd-selinux')
-      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file')
+      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file')\
+        .with_content('')
       should contain_service('pure-ftpd').with({
         'ensure' => 'running',
         'enable' => 'true',
@@ -28,7 +29,8 @@ describe 'pureftpd', :type => :class do
       should include_class('pureftpd::service') 
       should contain_package('pure-ftpd').with_ensure('present')
       should contain_package('pure-ftpd-selinux').with_ensure('present')
-      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file')
+      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file')\
+        .with_content('')
       should contain_service('pure-ftpd').with({
         'ensure' => 'running',
         'enable' => 'true',
@@ -45,7 +47,8 @@ describe 'pureftpd', :type => :class do
       should include_class('pureftpd::service') 
       should contain_package('pure-ftpd').with_ensure('present')
       should_not contain_package('pure-ftpd-selinux')
-      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file')
+      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file')\
+        .with_content('')
       should contain_service('pure-ftpd').with({
         'ensure' => 'running',
         'enable' => 'true',
@@ -71,7 +74,8 @@ describe 'pureftpd', :type => :class do
       should include_class('pureftpd::service') 
       should contain_package('pure-ftpd').with_ensure('present')
       should_not contain_package('pure-ftpd-selinux')
-      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file')
+      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file')\
+        .with_content('')
       should contain_service('pure-ftpd').with({
         'ensure' => 'running',
         'enable' => 'true',
@@ -80,7 +84,12 @@ describe 'pureftpd', :type => :class do
   end
 
   describe 'with $config keys' do
-    let(:params) {{ :config => { 'daemonize' => 'Yes', 'ipv4only' => 'No'} }}
+    let(:params) {{
+      :config => {
+        'daemonize' => 'Yes',
+        'ipv4only'  => 'No',
+      }
+    }}
     it do
       should include_class('pureftpd') 
       should include_class('pureftpd::install') 
@@ -108,4 +117,36 @@ describe 'pureftpd', :type => :class do
       }.to raise_error(Puppet::Error, /is not a Hash/)
     end
   end
+
+  describe 'with $config_ldap => { ldapserver => ldap.example.com  }' do
+    let(:params) {{
+      :config_ldap => {
+        'ldapserver' => 'ldap.example.com',
+        'ldapport'   => '389',
+      }
+    }}
+    it do
+      should include_class('pureftpd') 
+      should include_class('pureftpd::install') 
+      should include_class('pureftpd::config') 
+      should include_class('pureftpd::config::ldap') 
+      should include_class('pureftpd::service') 
+      should contain_package('pure-ftpd').with_ensure('present')
+      should_not contain_package('pure-ftpd-selinux')
+      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file') \
+        .with_content(<<-END.gsub(/^\s+/, ""))
+        LDAPConfigFile      /etc/pure-ftpd/pureftpd-ldap.conf
+        END
+      should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf').with_ensure('file') \
+        .with_content(<<-END.gsub(/^\s+/, ""))
+        LDAPServer          ldap.example.com
+        LDAPPort            389
+        END
+      should contain_service('pure-ftpd').with({
+        'ensure' => 'running',
+        'enable' => 'true',
+      })
+    end
+  end
+
 end
