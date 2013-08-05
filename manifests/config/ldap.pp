@@ -13,6 +13,7 @@
 #
 
 class pureftpd::config::ldap (
+  $ldapserver          = undef,
   $ldapport            = undef,
   $ldapbinddn          = undef,
   $ldapbindpw          = undef,
@@ -30,6 +31,7 @@ class pureftpd::config::ldap (
 
   # the complete list of options is defined in pure-ftpd/src/log_ldap_p.h
   $conf_options = [
+    'LDAPServer',
     'LDAPPort',
     'LDAPBindDN',
     'LDAPBindPW',

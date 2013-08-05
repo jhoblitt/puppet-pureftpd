@@ -11,6 +11,16 @@ describe 'pureftpd::config::ldap' do
     end
   end
 
+  describe 'with ldapserver' do
+    let(:params) {{ :ldapserver => 'ldap.example.com' }}
+    it do
+      should contain_class('pureftpd::config::ldap') 
+      should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
+        .with_ensure('file') \
+        .with_content(/^LDAPServer          ldap.example.com/)
+    end
+  end
+
   describe 'with ldapport' do
     let(:params) {{ :ldapport => '389' }}
     it do
@@ -153,26 +163,28 @@ describe 'pureftpd::config::ldap' do
 
   describe 'with everything' do
     let(:params) {{
-      :ldapauthmethod => 'PASSWORD',
-      :ldapport => '389',
-      :ldapbinddn => 'cn=Manager,dc=c9x,dc=org',
-      :ldapbindpw => 'r00tPaSsw0rD',
-      :ldapbasedn => 'cn=Users,dc=c9x,dc=org',
-      :ldapfilter => '(&(objectClass=posixAccount)(uid=\L))',
-      :ldaphomedir => 'homeDirectory',
-      :ldapversion => '3',
-      :ldapdefaultuid => '100',
+      :ldapserver          => 'ldap.example.com',
+      :ldapauthmethod      => 'PASSWORD',
+      :ldapport            => '389',
+      :ldapbinddn          => 'cn=Manager,dc=c9x,dc=org',
+      :ldapbindpw          => 'r00tPaSsw0rD',
+      :ldapbasedn          => 'cn=Users,dc=c9x,dc=org',
+      :ldapfilter          => '(&(objectClass=posixAccount)(uid=\L))',
+      :ldaphomedir         => 'homeDirectory',
+      :ldapversion         => '3',
+      :ldapdefaultuid      => '100',
       :ldapforcedefaultuid => 'False',
-      :ldapdefaultgid => '100',
-      :ldapdefaultgid => '100',
+      :ldapdefaultgid      => '100',
+      :ldapdefaultgid      => '100',
       :ldapforcedefaultgid => 'False',
-      :ldapusetls => 'False',
-      :ldapauthmethod => 'PASSWORD',
+      :ldapusetls          => 'False',
+      :ldapauthmethod      => 'PASSWORD',
     }}
     it do
       should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
+        .with_content(/^LDAPServer          ldap.example.com/) \
         .with_content(/^LDAPPort            389/) \
         .with_content(/^LDAPBindDN          cn=Manager,dc=c9x,dc=org/) \
         .with_content(/^LDAPBindPW          r00tPaSsw0rD/) \
