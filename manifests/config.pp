@@ -62,6 +62,13 @@ class pureftpd::config(
   $anonymousratio             = undef,
   $userratio                  = undef,
   $umask                      = undef,
+  $quota                      = undef,
+  $peruserlimits              = undef,
+  $ldapconfigfile             = undef,
+  $mysqlconfigfile            = undef,
+  $pgsqlconfigfile            = undef,
+  $puredb                     = undef,
+  $extauth                    = undef,
 ) inherits pureftpd::params {
 
   $conf_options = [
