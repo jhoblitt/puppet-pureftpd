@@ -44,7 +44,7 @@ defaults) and start `pure-ftpd` as a stand alone daemon.
       config      => {
         ipv4only         => 'Yes',
         passiveportrange => '49999:59999',
-      }
+      },
       config_ldap => {
         ldapserver      => 'ldap.example.com',
         ldapauthmethod  => 'PASSWORD',
@@ -70,7 +70,7 @@ defaults) and start `pure-ftpd` as a stand alone daemon.
       config      => {
         ipv4only         => 'Yes',
         passiveportrange => '49999:59999',
-      }
+      },
       config_pgsql => {
         pgsqlserver         => 'localhost',
         pgsqlport           => '5432',
