@@ -57,7 +57,6 @@ defaults) and start `pure-ftpd` as a stand alone daemon.
         ldapversion     => '3',
         ldapdefaultuid  => '100',
         ldapdefaultgid  => '100',
-        ldapdefaultgid  => '100',
         ldapusetls      => 'False',
         ldapauthmethod  => 'PASSWORD',
       }
