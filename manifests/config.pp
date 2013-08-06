@@ -139,6 +139,5 @@ class pureftpd::config(
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    notify  => Service[$pureftpd::params::service_name]
   }
 }

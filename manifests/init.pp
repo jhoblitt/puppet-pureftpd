@@ -44,7 +44,12 @@ class pureftpd (
     Class[ 'pureftpd::config::ldap' ]
   }
 
-  $safe_config = merge($config, $enable_ldap)
+  $safe_config = merge(
+    $config,
+    { notify => Class[ 'pureftpd::service' ] },
+    $enable_ldap
+  )
+
   create_resources( 'class', { 'pureftpd::config' => $safe_config } )
 
   Class[ 'pureftpd::install' ] ->
