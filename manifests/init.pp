@@ -30,7 +30,7 @@ class pureftpd (
 
   class{ 'pureftpd::install': use_selinux => $use_selinux }
 
-  unless (empty($config_ldap)) {
+  if ! empty($config_ldap) {
     # insert the path to the ldap conf file into pure-ftpd.conf
     $enable_ldap = { ldapconfigfile => $pureftpd::params::ldap_conf_path }
 
@@ -46,7 +46,7 @@ class pureftpd (
     Class[ 'pureftpd::config::ldap' ]
   }
 
-  unless (empty($config_pgsql)) {
+  if ! empty($config_pgsql) {
     # insert the path to the pgsql conf file into pure-ftpd.conf
     $enable_pgsql = { pgsqlconfigfile => $pureftpd::params::pgsql_conf_path }
 
