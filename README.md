@@ -34,7 +34,7 @@ defaults) and start `pure-ftpd` as a stand alone daemon.
       config      => {
         ipv4only         => 'Yes',
         passiveportrange => '49999:59999',
-      }
+      },
     }
 
 ### Enabling LDAP authentication
@@ -60,7 +60,7 @@ defaults) and start `pure-ftpd` as a stand alone daemon.
         ldapdefaultgid  => '100',
         ldapusetls      => 'False',
         ldapauthmethod  => 'PASSWORD',
-      }
+      },
     }
 
 ### Enabling PGSQL authentication
@@ -90,5 +90,5 @@ defaults) and start `pure-ftpd` as a stand alone daemon.
         pgsqlgetratiodl     => 'SELECT DLRatio FROM users WHERE User=\'\L\'',
         pgsqlgetbandwidthul => 'SELECT ULBandwidth FROM users WHERE User=\'\L\'',
         pgsqlgetbandwidthdl => 'SELECT DLBandwidth FROM users WHERE User=\'\L\'',
-      }
+      },
     }
