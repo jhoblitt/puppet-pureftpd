@@ -128,8 +128,10 @@ describe 'pureftpd', :type => :class do
     it do
       should include_class('pureftpd') 
       should include_class('pureftpd::install') 
-      should include_class('pureftpd::config') 
-      should include_class('pureftpd::config::ldap') 
+      should contain_class('pureftpd::config') \
+        .with_notify('Class[Pureftpd::Service]')
+      should contain_class('pureftpd::config::ldap') \
+        .with_notify('Class[Pureftpd::Service]')
       should include_class('pureftpd::service') 
       should contain_package('pure-ftpd').with_ensure('present')
       should_not contain_package('pure-ftpd-selinux')
@@ -159,8 +161,10 @@ describe 'pureftpd', :type => :class do
     it do
       should include_class('pureftpd') 
       should include_class('pureftpd::install') 
-      should include_class('pureftpd::config') 
-      should include_class('pureftpd::config::pgsql') 
+      should contain_class('pureftpd::config') \
+        .with_notify('Class[Pureftpd::Service]')
+      should contain_class('pureftpd::config::pgsql') \
+        .with_notify('Class[Pureftpd::Service]')
       should include_class('pureftpd::service') 
       should contain_package('pure-ftpd').with_ensure('present')
       should_not contain_package('pure-ftpd-selinux')
@@ -172,6 +176,49 @@ describe 'pureftpd', :type => :class do
         .with_content(<<-END.gsub(/^\s+/, ""))
         PGSQLServer         localhost
         PGSQLPort           5432
+        END
+      should contain_service('pure-ftpd').with({
+        'ensure' => 'running',
+        'enable' => 'true',
+      })
+    end
+  end
+
+  describe 'with all config sections' do
+    let(:params) {{
+      :use_selinux => true,
+      :config      => {
+        'ipv4only'         => 'Yes',
+      },
+      :config_ldap           => {
+        'ldapserver'          => 'ldap.example.com',
+      },
+      :config_pgsql => {
+        'pgsqlserver'         => 'localhost',
+      }
+    }}
+    it do
+      should include_class('pureftpd') 
+      should include_class('pureftpd::install') 
+      should contain_class('pureftpd::config') \
+        .with_notify('Class[Pureftpd::Service]')
+      should contain_class('pureftpd::config::ldap') \
+        .with_notify('Class[Pureftpd::Service]')
+      should contain_class('pureftpd::config::pgsql') \
+        .with_notify('Class[Pureftpd::Service]')
+      should include_class('pureftpd::service') 
+      should contain_package('pure-ftpd').with_ensure('present')
+      should contain_package('pure-ftpd-selinux').with_ensure('present')
+      should contain_file('/etc/pure-ftpd/pure-ftpd.conf').with_ensure('file') \
+        .with_content(%r{PGSQLConfigFile     /etc/pure-ftpd/pureftpd-pgsql.conf})\
+        .with_content(%r{LDAPConfigFile      /etc/pure-ftpd/pureftpd-ldap.conf})
+      should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf').with_ensure('file') \
+        .with_content(<<-END.gsub(/^\s+/, ""))
+        LDAPServer          ldap.example.com
+        END
+      should contain_file('/etc/pure-ftpd/pureftpd-pgsql.conf').with_ensure('file') \
+        .with_content(<<-END.gsub(/^\s+/, ""))
+        PGSQLServer         localhost
         END
       should contain_service('pure-ftpd').with({
         'ensure' => 'running',

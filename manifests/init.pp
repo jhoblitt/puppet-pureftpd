@@ -35,10 +35,12 @@ class pureftpd (
     $enable_ldap = { ldapconfigfile => $pureftpd::params::ldap_conf_path }
 
     # instantiate a pureftpd::config::ldap that will notify the service class
-    $safe_config_ldap = merge($config,
+    $safe_config_ldap = merge($config_ldap,
       { notify => Class[ 'pureftpd::service' ] }
     )
-    create_resources( 'class', { 'pureftpd::config::ldap' => $config_ldap } )
+    create_resources( 'class',
+      { 'pureftpd::config::ldap' => $safe_config_ldap }
+    )
 
     # only try to create the ldap configuration file after the pureftpd package
     # is installed and configuration; otherwise the dir may not exist yet
@@ -51,10 +53,12 @@ class pureftpd (
     $enable_pgsql = { pgsqlconfigfile => $pureftpd::params::pgsql_conf_path }
 
     # instantiate a pureftpd::config::mysql will notify the service class
-    $safe_config_pgsql = merge($config,
+    $safe_config_pgsql = merge($config_pgsql,
       { notify => Class[ 'pureftpd::service' ] }
     )
-    create_resources( 'class', { 'pureftpd::config::pgsql' => $config_pgsql } )
+    create_resources( 'class',
+      { 'pureftpd::config::pgsql' => $safe_config_pgsql }
+    )
 
     # only try to create the pgsql configuration file after the pureftpd
     # package is installed and configuration; otherwise the dir may not exist
