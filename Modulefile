@@ -17,4 +17,4 @@ Requirements:
 Todo:
 - complete the config_mysql and config_pgsql defines
 '
-dependency 'puppetlabs/stdlib', '>= 2.2.0'
+dependency 'puppetlabs/stdlib', '>= 4.1.0'
