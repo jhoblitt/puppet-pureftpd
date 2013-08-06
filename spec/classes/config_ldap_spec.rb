@@ -199,7 +199,6 @@ describe 'pureftpd::config::ldap' do
         .with_content(/^LDAPForceDefaultGID False/) \
         .with_content(/^LDAPUseTLS          False/) \
         .with_content(/^LDAPAuthMethod      PASSWORD/) \
-        .with_content(/^LDAPAuthMethod      PASSWORD/)
     end
   end
 end
