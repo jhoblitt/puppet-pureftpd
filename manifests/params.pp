@@ -23,7 +23,7 @@ class pureftpd::params {
       $ldap_conf_erb   = 'redhat/pure-ftpd.conf.erb'
       $ldap_conf_path  = "${config_dir}/pureftpd-ldap.conf"
 
-      $mysql_conf_erb  = 'redhat/pureftpd-mysql.conf.erb'
+      $mysql_conf_erb  = 'redhat/pure-ftpd.conf.erb'
       $mysql_conf_path = "${config_dir}/pureftpd-mysql.conf"
 
       $pgsql_conf_erb  = 'redhat/pure-ftpd.conf.erb'
