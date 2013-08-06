@@ -12,8 +12,48 @@
 #
 # - implement template and variables for the pgsql config file
 #
+class pureftpd::config::pgsql (
+  $pgsqlserver         = undef,
+  $pgsqlport           = undef,
+  $pgsqluser           = undef,
+  $pgsqlpassword       = undef,
+  $pgsqldatabase       = undef,
+  $pgsqlcrypt          = undef,
+  $pgsqlgetpw          = undef,
+  $pgsqlgetuid         = undef,
+  $pgsqldefaultuid     = undef,
+  $pgsqlgetgid         = undef,
+  $pgsqldefaultgid     = undef,
+  $pgsqlgetdir         = undef,
+  $pgsqlgetqtafs       = undef,
+  $pgsqlgetqtasz       = undef,
+  $pgsqlgetratioul     = undef,
+  $pgsqlgetratiodl     = undef,
+  $pgsqlgetbandwidthul = undef,
+  $pgsqlgetbandwidthdl = undef,
+) inherits pureftpd::params {
 
-class pureftpd::config::pgsql inherits pureftpd::params {
+  # pure-ftpd-1.0.30/src/log_pgsql_p.h
+  $conf_options = [
+    'PGSQLServer',
+    'PGSQLPort',
+    'PGSQLUser',
+    'PGSQLPassword',
+    'PGSQLDatabase',
+    'PGSQLCrypt',
+    'PGSQLGetPW',
+    'PGSQLGetUID',
+    'PGSQLDefaultUID',
+    'PGSQLGetGID',
+    'PGSQLDefaultGID',
+    'PGSQLGetDir',
+    'PGSQLGetQTAFS',
+    'PGSQLGetQTASZ',
+    'PGSQLGetRatioUL',
+    'PGSQLGetRatioDL',
+    'PGSQLGetBandwidthUL',
+    'PGSQLGetBandwidthDL',
+  ]
 
   file { $pureftpd::params::pgsql_conf_path:
     ensure  => file,

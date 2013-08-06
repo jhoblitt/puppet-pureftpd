@@ -26,7 +26,7 @@ class pureftpd::params {
       $mysql_conf_erb  = 'redhat/pureftpd-mysql.conf.erb'
       $mysql_conf_path = "${config_dir}/pureftpd-mysql.conf"
 
-      $pgsql_conf_erb  = 'redhat/pureftpd-pgsql.conf.erb'
+      $pgsql_conf_erb  = 'redhat/pure-ftpd.conf.erb'
       $pgsql_conf_path = "${config_dir}/pureftpd-pgsql.conf"
     }
     default:{
