@@ -71,6 +71,7 @@ class pureftpd::config(
   $extauth                    = undef,
 ) inherits pureftpd::params {
 
+  # options taken from pure-ftpd-1.0.30/configuration-file/pure-config.pl
   $conf_options = [
     'IPV4Only',
     'IPV6Only',

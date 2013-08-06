@@ -29,7 +29,11 @@ class pureftpd::config::ldap (
   $ldapauthmethod      = undef,
 ) inherits pureftpd::params {
 
-  # the complete list of options is defined in pure-ftpd/src/log_ldap_p.h
+  # options taken from pure-ftpd-1.0.30/src/log_ldap_p.h
+  # XXX The options LDAPForceDefaultUID & LDAPForceDefaultGID are non-mainline
+  # additions to pure-ftpd.  It is hoped that these will be merged into a
+  # future offical release.
+  # https://github.com/jhoblitt/pure-ftpd/commit/bb03ca57fb087bb03a6c8a69fe160e87c0d9c5e8
   $conf_options = [
     'LDAPServer',
     'LDAPPort',
