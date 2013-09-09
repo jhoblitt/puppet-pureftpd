@@ -56,6 +56,10 @@ describe 'pureftpd::config::ldap' do
     it_behaves_like 'config', all_params, all_content
   end
 
+  context 'no options' do
+    it_behaves_like 'config', {}, ''
+  end
+
   context 'invalid param' do
     let(:facts) {{ :osfamily=> 'RedHat' }}
     let(:params) {{ :foo => 'bar' }}
