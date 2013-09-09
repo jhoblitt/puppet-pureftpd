@@ -1,66 +1,66 @@
 require 'spec_helper'
 
-  config_options = [
-    'IPV4Only',
-    'IPV6Only',
-    'ChrootEveryone',
-    'BrokenClientsCompatibility',
-    'Daemonize',
-    'VerboseLog',
-    'DisplayDotFiles',
-    'AnonymousOnly',
-    'NoAnonymous',
-    'DontResolve',
-    'AnonymousCanCreateDirs',
-    'NATmode',
-    'CallUploadScript',
-    'AntiWarez',
-    'AllowUserFXP',
-    'AllowAnonymousFXP',
-    'ProhibitDotFilesWrite',
-    'ProhibitDotFilesRead',
-    'AllowDotFiles',
-    'AutoRename',
-    'AnonymousCantUpload',
-    'LogPID',
-    'NoChmod',
-    'KeepAllFiles',
-    'CreateHomeDir',
-    'NoRename',
-    'CustomerProof',
-    'NoTruncate',
-    'FileSystemCharset',
-    'ClientCharset',
-    'SyslogFacility',
-    'FortunesFile',
-    'ForcePassiveIP',
-    'Bind',
-    'AnonymousBandwidth',
-    'UserBandwidth',
-    'TrustedIP',
-    'AltLog',
-    'PIDFile',
-    'MaxIdleTime',
-    'MaxDiskUsage',
-    'TrustedGID',
-    'MaxClientsNumber',
-    'MaxClientsPerIP',
-    'MaxLoad',
-    'MinUID',
-    'TLS',
-    'LimitRecursion',
-    'PassivePortRange',
-    'AnonymousRatio',
-    'UserRatio',
-    'Umask',
-    'Quota',
-    'PerUserLimits',
-    'LDAPConfigFile',
-    'MySQLConfigFile',
-    'PGSQLConfigFile',
-    'PureDB',
-    'ExtAuth',
-  ]
+conf_options = [
+  'IPV4Only',
+  'IPV6Only',
+  'ChrootEveryone',
+  'BrokenClientsCompatibility',
+  'Daemonize',
+  'VerboseLog',
+  'DisplayDotFiles',
+  'AnonymousOnly',
+  'NoAnonymous',
+  'DontResolve',
+  'AnonymousCanCreateDirs',
+  'NATmode',
+  'CallUploadScript',
+  'AntiWarez',
+  'AllowUserFXP',
+  'AllowAnonymousFXP',
+  'ProhibitDotFilesWrite',
+  'ProhibitDotFilesRead',
+  'AllowDotFiles',
+  'AutoRename',
+  'AnonymousCantUpload',
+  'LogPID',
+  'NoChmod',
+  'KeepAllFiles',
+  'CreateHomeDir',
+  'NoRename',
+  'CustomerProof',
+  'NoTruncate',
+  'FileSystemCharset',
+  'ClientCharset',
+  'SyslogFacility',
+  'FortunesFile',
+  'ForcePassiveIP',
+  'Bind',
+  'AnonymousBandwidth',
+  'UserBandwidth',
+  'TrustedIP',
+  'AltLog',
+  'PIDFile',
+  'MaxIdleTime',
+  'MaxDiskUsage',
+  'TrustedGID',
+  'MaxClientsNumber',
+  'MaxClientsPerIP',
+  'MaxLoad',
+  'MinUID',
+  'TLS',
+  'LimitRecursion',
+  'PassivePortRange',
+  'AnonymousRatio',
+  'UserRatio',
+  'Umask',
+  'Quota',
+  'PerUserLimits',
+  'LDAPConfigFile',
+  'MySQLConfigFile',
+  'PGSQLConfigFile',
+  'PureDB',
+  'ExtAuth',
+]
 
 describe 'pureftpd::config' do
 
@@ -83,7 +83,7 @@ describe 'pureftpd::config' do
   # accumutate all of the params and content strings as we test each individual
   # option so we can use them for the next test
   context 'one option at a time' do
-    config_options.each do |option|
+    conf_options.each do |option|
       params = {}
       params[option.downcase.to_sym] = value
       content = sprintf("%-19s %s\n", option, value)
@@ -99,6 +99,16 @@ describe 'pureftpd::config' do
   # options values in the output file is fixed
   context 'all options' do
     it_behaves_like 'config', all_params, all_content
+  end
+
+  context 'invalid param' do
+    let(:facts) {{ :osfamily=> 'RedHat' }}
+    let(:params) {{ :foo => 'bar' }}
+
+    it 'should fail' do
+      expect { should include_class('pureftpd::config') }.
+        to raise_error(Puppet::Error, /Invalid parameter foo/)
+    end
   end
 
 end

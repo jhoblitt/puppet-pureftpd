@@ -1,25 +1,25 @@
 require 'spec_helper'
 
-  test_options = [
-    'PGSQLServer',
-    'PGSQLPort',
-    'PGSQLUser',
-    'PGSQLPassword',
-    'PGSQLDatabase',
-    'PGSQLCrypt',
-    'PGSQLGetPW',
-    'PGSQLGetUID',
-    'PGSQLDefaultUID',
-    'PGSQLGetGID',
-    'PGSQLDefaultGID',
-    'PGSQLGetDir',
-    'PGSQLGetQTAFS',
-    'PGSQLGetQTASZ',
-    'PGSQLGetRatioUL',
-    'PGSQLGetRatioDL',
-    'PGSQLGetBandwidthUL',
-    'PGSQLGetBandwidthDL',
-  ]
+conf_options = [
+  'PGSQLServer',
+  'PGSQLPort',
+  'PGSQLUser',
+  'PGSQLPassword',
+  'PGSQLDatabase',
+  'PGSQLCrypt',
+  'PGSQLGetPW',
+  'PGSQLGetUID',
+  'PGSQLDefaultUID',
+  'PGSQLGetGID',
+  'PGSQLDefaultGID',
+  'PGSQLGetDir',
+  'PGSQLGetQTAFS',
+  'PGSQLGetQTASZ',
+  'PGSQLGetRatioUL',
+  'PGSQLGetRatioDL',
+  'PGSQLGetBandwidthUL',
+  'PGSQLGetBandwidthDL',
+]
 
 describe 'pureftpd::config::pgsql' do
 
@@ -42,7 +42,7 @@ describe 'pureftpd::config::pgsql' do
   # accumutate all of the params and content strings as we test each individual
   # option so we can use them for the next test
   context 'one option at a time' do
-    test_options.each do |option|
+    conf_options.each do |option|
       params = {}
       params[option.downcase.to_sym] = value
       content = sprintf("%-19s %s\n", option, value)
@@ -58,6 +58,16 @@ describe 'pureftpd::config::pgsql' do
   # options values in the output file is fixed
   context 'all options' do
     it_behaves_like 'config', all_params, all_content
+  end
+
+  context 'invalid param' do
+    let(:facts) {{ :osfamily=> 'RedHat' }}
+    let(:params) {{ :foo => 'bar' }}
+
+    it 'should fail' do
+      expect { should include_class('pureftpd::config::pgsql') }.
+        to raise_error(Puppet::Error, /Invalid parameter foo/)
+    end
   end
 
 end
