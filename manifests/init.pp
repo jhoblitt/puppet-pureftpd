@@ -44,11 +44,13 @@ class pureftpd (
   $use_selinux  = false,
   $config       = {},
   $config_ldap  = {},
+  $config_mysql = {},
   $config_pgsql = {},
 ) {
   validate_bool($use_selinux)
   validate_hash($config)
   validate_hash($config_ldap)
+  validate_hash($config_mysql)
   validate_hash($config_pgsql)
 
   include pureftpd::service
@@ -71,6 +73,24 @@ class pureftpd (
     # is installed and configuration; otherwise the dir may not exist yet
     Class[ 'pureftpd::config' ] ->
     Class[ 'pureftpd::config::ldap' ]
+  }
+
+  if ! empty($config_mysql) {
+    # insert the path to the mysql conf file into pure-ftpd.conf
+    $enable_mysql = { mysqlconfigfile => $pureftpd::params::mysql_conf_path }
+
+    # instantiate a pureftpd::config::mysql that will notify the service class
+    $safe_config_mysql = merge($config_mysql,
+      { notify => Class[ 'pureftpd::service' ] }
+    )
+    create_resources( 'class',
+      { 'pureftpd::config::mysql' => $safe_config_mysql }
+    )
+
+    # only try to create the mysql configuration file after the pureftpd package
+    # is installed and configuration; otherwise the dir may not exist yet
+    Class[ 'pureftpd::config' ] ->
+    Class[ 'pureftpd::config::mysql' ]
   }
 
   if ! empty($config_pgsql) {
@@ -96,6 +116,7 @@ class pureftpd (
     $config,
     { notify => Class[ 'pureftpd::service' ] },
     $enable_ldap,
+    $enable_mysql,
     $enable_pgsql
   )
 
