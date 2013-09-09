@@ -16,7 +16,7 @@ Puppet pureftpd Module
 Overview
 --------
 
-Manages the pure-ftpd package with comprehensive configuration support'
+Manages the pure-ftpd package with comprehensive configuration support
 
 
 Description
