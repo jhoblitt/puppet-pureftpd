@@ -8,6 +8,6 @@ class pureftpd::service inherits pureftpd::params {
     ensure     => running,
     enable     => true,
     hasrestart => true,
-    hasstatus  => false,
+    hasstatus  => true,
   }
 }
