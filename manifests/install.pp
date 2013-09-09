@@ -6,6 +6,7 @@
 class pureftpd::install (
   $use_selinux = false,
 ) inherits pureftpd::params {
+  validate_bool($use_selinux)
 
   if ($use_selinux) {
     $package_name = $pureftpd::params::package_name_selinux
