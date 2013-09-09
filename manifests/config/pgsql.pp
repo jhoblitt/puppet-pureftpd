@@ -1,16 +1,8 @@
 # == Class: pureftpd::config::pgsql
 #
-# This module manages the pure-ftpd configuration files with pgsql
-# authentication
+# Manages the `pureftpd-pgsql.conf` file.  This class should be considered
+# private.
 #
-# === Authors
-#
-# 5Ub-Z3r0
-# Joshua Hoblitt <jhoblitt@cpan.org>
-#
-# === TODO:
-#
-# - implement template and variables for the pgsql config file
 #
 class pureftpd::config::pgsql (
   $pgsqlserver         = undef,

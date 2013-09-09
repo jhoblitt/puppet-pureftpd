@@ -1,13 +1,8 @@
 # == Class: pureftpd::params
 #
-# This class manages common server parameters for the pure-ftpd server
+# This class should be considered private.
 #
-# === Authors
 #
-# 5Ub-Z3r0
-# Joshua Hoblitt <jhoblitt@cpan.org>
-#
-
 class pureftpd::params {
   case $::osfamily {
     'RedHat': {

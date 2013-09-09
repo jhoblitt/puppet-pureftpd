@@ -1,19 +1,44 @@
 # == Class: pureftpd
 #
-# This class installs, configures, and enables the pure-ftpd server
+# This class installs, configures, and enables the pure-ftpd package
 #
 # === Parameters
 #
 # [*use_selinux*]
+#   Boolean. Manages whether or not to enable the selinux extensions.
+#
 #   Optional, defaults to false.
-#   Manages whether or not to enable the selinux extensions.
 #
 # [*config*]
+#   A hash of configuration file options to be created in `pure-ftpd.conf`.
+#
 #   Optional, defaults to `{}`.
 #
-# === Authors
+# [*config_ldap*]
+#   A hash of configuration file options to be created in `pureftpd-ldap.conf`.
 #
-# 5Ub-Z3r0
+#   Optional, defaults to `{}`.
+#
+# [*config_mysql*]
+#   A hash of configuration file options to be created in `pureftpd-mysql.conf`.
+#
+#   Optional, defaults to `{}`.
+#
+# [*config_pgsql*]
+#   A hash of configuration file options to be created in `pureftpd-pgsql.conf`.
+#
+#   Optional, defaults to `{}`.
+#
+# === Examples
+#
+#    class { 'pureftpd':
+#      use_selinux => true,
+#      config      => {
+#        ipv4only         => 'Yes',
+#        passiveportrange => '49999:59999',
+#      },
+#    }
+#
 #
 class pureftpd (
   $use_selinux  = false,

@@ -1,13 +1,7 @@
 # == Class: pureftpd::config
 #
-# This module manages the pure-ftpd server configuration file
+# Manages the `pure-ftpd.conf` file.  This class should be considered private.
 #
-# === Parameters
-#
-# === Authors
-#
-# 5Ub-Z3r0
-# Joshua Hoblitt <jhoblitt@cpan.org>
 #
 class pureftpd::config(
   $ipv4only                   = undef,

@@ -1,19 +1,8 @@
 # == Class: pureftpd::install
 #
-# This class installs the pure-ftpd server
+# This class should be considered private.
 #
-# === Parameters
 #
-# [*use_selinux*]
-#   Optional, defaults to false.
-#   Manages whether or not to enable the selinux extensions.
-#
-# === Authors
-#
-# 5Ub-Z3r0
-# Joshua Hoblitt <jhoblitt@cpan.org>
-#
-
 class pureftpd::install (
   $use_selinux = false,
 ) inherits pureftpd::params {

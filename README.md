@@ -3,48 +3,128 @@ Puppet pureftpd Module
 
 [![Build Status](https://travis-ci.org/jhoblitt/puppet-pureftpd.png)](https://travis-ci.org/jhoblitt/puppet-pureftpd)
 
+#### Table of Contents
+
+1. [Overview](#overview)
+2. [Description](#description)
+3. [Usage](#usage)
+4. [Limitations](#limitations)
+    * [Tested Platforms](#tested-platforms)
+5. [Support](#support)
+
+
+Overview
+--------
+
+Manages the pure-ftpd package with comprehensive configuration support'
+
 
 Description
 -----------
 
-This is a puppet module for installation and configuration of the `pure-ftpd`
-software.
+This is a puppet module for installation and configuration of the
+[`pure-ftpd`](http://www.pureftpd.org/project/pure-ftpd) software package.  It
+aims to support all valid configuration file values.
+
+### Forked
+
+This module started out as a fork of
+[`5Ub-Z3r0/puppet-pureftpd`](https://github.com/5Ub-Z3r0/puppet-pureftpd) but
+has been so heavily redesigned over time that it's probably not reasonable to
+blame any of the design or implementation on
+[`5Ub-Z3r0`](https://github.com/5Ub-Z3r0).  It would also be exceptionally
+difficult to re-unify the two modules due to fundamental API differences.
+
+The original module was marked as being licensed under `GPLv3` in comments and
+no `LICENSE` file was present.  Very little to none of the original module code
+remains in the present version of this module.  All contributions by `Joshua
+Hoblitt` are licensed under `Apache License, Version 2.0`.  You should consult
+with a lawyer for a legal opinion as to weather or not this module constitutes
+a derived work.
 
 
-Examples
---------
+Usage
+-----
 
-### Basic
+In general, any valid `pure-ftpd` configuration file option (including the
+separate configuration files for auth modules) can be set by creating a key in
+the appropriate class parameter hash but with the name of the option
+transliterated to *lowercase*.  The values passed to that option are handled
+completely as raw strings but this module.  No effort is made to handle
+`boolean` or `integer` values as `pure-ftpd` itself is not consistent in how it
+handles these values.
 
-Install `pure-ftpd` with an empty `pure-ftpd.conf` config file (accepting all
-defaults) and start `pure-ftpd` as a stand alone daemon.
+For example, if you wanted to create the configuration option example below in the file `/etc/pure-ftpd/pure-ftpd.conf`,
+
+    ChrootEveryone yes
+
+You would declare it like this to the puppet module:
+
+    class { 'pureftpd':
+      config => {
+        chrooteveryone => 'yes',
+      }
+    }
+
+The notable exception to that rule is for these `pure-ftpd.conf` options, which
+should not need to be manually declared.  Passing a hash of configuration
+options to the appropriate class parameter automatically defines these options
+for you.
+
+    LDAPConfigFile
+    MySQLConfigFile
+    PGSQLConfigFile
+
+
+### `pure-ftpd` Options
+
+The `pure-ftpd` documentation does not provide a canonical list of all possible
+configuration options with examples.  However, there are number of "HOW TO"s on
+the official [documentation](http://www.pureftpd.org/project/pure-ftpd/doc) web
+page.
+
+There is a list of command line switches in the distribution's
+[`README`](https://github.com/jedisct1/pure-ftpd/blob/master/README) that
+should all have `pure-ftpd.conf` option analogs.
+
+Here are some useful sources for discovering configuration parameters with examples:
+
+* [`pure-ftpd.conf`](https://github.com/jedisct1/pure-ftpd/blob/master/configuration-file/pure-ftpd.conf.in)
+* [`pureftpd-ldap.conf`](https://github.com/jedisct1/pure-ftpd/blob/master/pureftpd-ldap.conf)
+* [`pureftpd-mysql.conf`](https://github.com/jedisct1/pure-ftpd/blob/master/pureftpd-mysql.conf)
+* [`pureftpd-pgsql.conf`](https://github.com/jedisct1/pure-ftpd/blob/master/pureftpd-pgsql.conf)
+
+### Basic Usage
+
+Install the `pure-ftpd` package with an empty `pure-ftpd.conf` config file
+(accepting all defaults) and start `pure-ftpd` as a stand alone daemon.
 
     class { 'pureftpd': }
 
-### Selinux support
+### SELinux Support
 
     class { 'pureftpd':
       use_selinux => true,
     }
 
-### Setting configuration options
+### Setting Configuration Options
+
+Options for `pure-ftpd.conf`] should be passed into the `config` class
+parameter as a hash.
 
     class { 'pureftpd':
-      use_selinux => true,
       config      => {
         ipv4only         => 'Yes',
         passiveportrange => '49999:59999',
       },
     }
 
-### Enabling LDAP authentication
+### Enabling LDAP Authentication
+
+Options for `pureftpd-ldap.conf`] should be passed into the `config_ldap` class
+parameter as a hash.
 
     class { 'pureftpd':
-      use_selinux => true,
-      config      => {
-        ipv4only         => 'Yes',
-        passiveportrange => '49999:59999',
-      },
       config_ldap => {
         ldapserver      => 'ldap.example.com',
         ldapauthmethod  => 'PASSWORD',
@@ -62,14 +142,43 @@ defaults) and start `pure-ftpd` as a stand alone daemon.
       },
     }
 
-### Enabling PGSQL authentication
+### Enabling MYSQL Authentication
+
+Options for `pureftpd-mysql.conf`] should be passed into the `config_mysql`
+class parameter as a hash.
 
     class { 'pureftpd':
-      use_selinux => true,
-      config      => {
-        ipv4only         => 'Yes',
-        passiveportrange => '49999:59999',
+      config_mysql               => {
+        mysqlserver              => 'localhost'
+        mysqlport                => '3306'
+        mysqlsocket              => '/tmp/mysql.sock'
+        mysqluser                => 'root'
+        mysqlpassword            => 'rootpw'
+        mysqldatabase            => 'pureftpd'
+        mysqlcrypt               => 'cleartext'
+        mysqltransactions        => 'On'
+        mysqlgetpw               => 'SELECT Password FROM users WHERE User="\L"'
+        mysqlgetuid              => 'SELECT Uid FROM users WHERE User="\L"'
+        mysqldefaultuid          => '1000'
+        mysqlgetgid              => 'SELECT Gid FROM users WHERE User="\L"'
+        mysqldefaultgid          => '1000'
+        mysqlgetdir              => 'SELECT Dir FROM users WHERE User="\L"'
+        mysqlforcetildeexpansion => '0'
+        mysqlgetqtafs            => 'SELECT QuotaFiles FROM users WHERE User="\L"'
+        mysqlgetqtasz            => 'SELECT QuotaSize FROM users WHERE User="\L"'
+        mysqlgetratioul          => 'SELECT ULRatio FROM users WHERE User="\L"'
+        mysqlgetratiodl          => 'SELECT DLRatio FROM users WHERE User="\L"'
+        mysqlgetbandwidthul      => 'SELECT ULBandwidth FROM users WHERE User="\L"'
+        mysqlgetbandwidthdl      => 'SELECT DLBandwidth FROM users WHERE User="\L"'
       },
+    }
+
+### Enabling PGSQL Authentication
+
+Options for `pureftpd-pgsql.conf`] should be passed into the `config_pgsql`
+class parameter as a hash.
+
+    class { 'pureftpd':
       config_pgsql => {
         pgsqlserver         => 'localhost',
         pgsqlport           => '5432',
@@ -91,3 +200,34 @@ defaults) and start `pure-ftpd` as a stand alone daemon.
         pgsqlgetbandwidthdl => 'SELECT DLBandwidth FROM users WHERE User=\'\L\'',
       },
     }
+
+### Canonical Example
+
+Limitations
+-----------
+
+At present, this module is only capable of installing the `pure-ftpd` package
+and enabling it as a daemonized service.  The lack of uninstallation support is
+probably a bug.
+
+Only support for `$::osfamily == 'RedHat'` has been implemented.  Adding
+support for other platform should be trivial but needs to involve full up
+integration testing.
+
+The supported configuration file values were discovered via code inspection of
+the `pure-ftpd` `v1.0.31` release.  There are possibly new configuration
+values that have been introduced it subsequent releases.  Any configuration
+values present in a `pure-ftpd` but not supported by this module should be
+considered a bug.
+
+### Tested Platforms
+
+* el6.x
+
+
+Support
+-------
+
+Please log tickets and issues at
+[github](https://github.com/jhoblitt/puppet-pureftpd/issues)
+

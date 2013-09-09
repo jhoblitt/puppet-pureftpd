@@ -1,17 +1,9 @@
 # == Class: pureftpd::config::ldap
 #
-# This module manages the pure-ftpd configuration files with LDAP
-# authentication
-#
-# === Parameters
+# Manages the `pureftpd-ldap.conf` file.  This class should be considered
+# private.
 #
 #
-# === Authors
-#
-# 5Ub-Z3r0
-# Joshua Hoblitt <jhoblitt@cpan.org>
-#
-
 class pureftpd::config::ldap (
   $ldapserver          = undef,
   $ldapport            = undef,

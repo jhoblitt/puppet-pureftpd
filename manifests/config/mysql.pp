@@ -1,21 +1,9 @@
 # == Class: pureftpd::config::mysql
 #
-# This module manages the pure-ftpd configuration files with mysql
-# authentication
-#
-# === Parameters
+# Manages the `pureftpd-mysql.conf` file.  This class should be considered
+# private.
 #
 #
-# === Authors
-#
-# 5Ub-Z3r0
-# Joshua Hoblitt <jhoblitt@cpan.org>
-#
-# === TODO:
-#
-# - implement template and variables for the mysql config file
-#
-
 class pureftpd::config::mysql (
   $mysqlserver                = undef,
   $mysqlport                  = undef,
