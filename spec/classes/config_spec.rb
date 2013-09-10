@@ -40,6 +40,7 @@ conf_options = [
   'TrustedIP',
   'AltLog',
   'PIDFile',
+  'TLSCipherSuite',
   'MaxIdleTime',
   'MaxDiskUsage',
   'TrustedGID',
@@ -60,6 +61,8 @@ conf_options = [
   'PGSQLConfigFile',
   'PureDB',
   'ExtAuth',
+  'UnixAuthentication',
+  'PAMAuthentication',
 ]
 
 describe 'pureftpd::config' do

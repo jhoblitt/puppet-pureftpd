@@ -43,6 +43,7 @@ class pureftpd::config(
   $trustedip                  = undef,
   $altlog                     = undef,
   $pidfile                    = undef,
+  $tlsciphersuite             = undef, # added post 1.0.31
   $maxidletime                = undef,
   $maxdiskusage               = undef,
   $trustedgid                 = undef,
@@ -63,6 +64,8 @@ class pureftpd::config(
   $pgsqlconfigfile            = undef,
   $puredb                     = undef,
   $extauth                    = undef,
+  $pamauthentication          = undef,
+  $unixauthentication         = undef,
 ) inherits pureftpd::params {
 
   # options taken from pure-ftpd-1.0.30/configuration-file/pure-config.pl
@@ -106,6 +109,7 @@ class pureftpd::config(
     'TrustedIP',
     'AltLog',
     'PIDFile',
+    'TLSCipherSuite',
     'MaxIdleTime',
     'MaxDiskUsage',
     'TrustedGID',
@@ -126,6 +130,8 @@ class pureftpd::config(
     'PGSQLConfigFile',
     'PureDB',
     'ExtAuth',
+    'UnixAuthentication',
+    'PAMAuthentication',
   ]
 
   file { $pureftpd::params::conf_path:
