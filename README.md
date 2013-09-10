@@ -113,9 +113,69 @@ Options for `pure-ftpd.conf`] should be passed into the `config` class
 parameter as a hash.
 
     class { 'pureftpd':
-      config      => {
-        ipv4only         => 'Yes',
-        passiveportrange => '49999:59999',
+      config => {
+        ipv4only                   => 'yes',
+        ipv6only                   => 'yes',
+        chrooteveryone             => 'yes',
+        brokenclientscompatibility => 'no',
+        daemonize                  => 'yes',
+        verboselog                 => 'no',
+        displaydotfiles            => 'yes',
+        anonymousonly              => 'no',
+        noanonymous                => 'no',
+        dontresolve                => 'yes',
+        anonymouscancreatedirs     => 'no',
+        natmode                    => 'no',
+        calluploadscript           => 'yes',
+        antiwarez                  => 'yes',
+        allowuserfxp               => 'no',
+        allowanonymousfxp          => 'no',
+        prohibitdotfileswrite      => 'no',
+        prohibitdotfilesread       => 'no',
+        allowdotfiles              => 'no',
+        autorename                 => 'no',
+        anonymouscantupload        => 'no',
+        logpid                     => 'yes',
+        nochmod                    => 'yes',
+        keepallfiles               => 'yes',
+        createhomedir              => 'yes',
+        norename                   => 'yes',
+        customerproof              => 'yes',
+        notruncate                 => 'yes',
+        filesystemcharset          => 'big5',
+        clientcharset              => 'big5',
+        syslogfacility             => 'ftp',
+        fortunesfile               => '/usr/share/fortune/zippy',
+        forcepassiveip             => '192.168.0.1',
+        bind                       => '127.0.0.1,21',
+        anonymousbandwidth         => '8',
+        userbandwidth              => '8',
+        trustedip                  => '10.1.1.1',
+        altlog                     => 'w3c:/var/log/pureftpd.log',
+        pidfile                    => '/var/run/pure-ftpd.pid',
+        tlsciphersuite             => 'HIGH:MEDIUM:+TLSv1:!SSLv2:+SSLv3',
+        maxidletime                => '15',
+        maxdiskusage               => '99',
+        trustedgid                 => '100',
+        maxclientsnumber           => '50',
+        maxclientsperip            => '8',
+        maxload                    => '4',
+        minuid                     => '100',
+        tls                        => '1',
+        limitrecursion             => '10000 8',
+        passiveportrange           => '30000 50000',
+        anonymousratio             => '1 10',
+        userratio                  => '1 10',
+        umask                      => '133:022',
+        quota                      => '1000:10',
+        peruserlimits              => '3:20',
+        ldapconfigfile             => '/etc/pureftpd-ldap.conf',
+        mysqlconfigfile            => '/etc/pureftpd-mysql.conf',
+        pgsqlconfigfile            => '/etc/pureftpd-pgsql.conf',
+        puredb                     => '/etc/pureftpd.pdb',
+        extauth                    => '/var/run/ftpd.sock',
+        unixauthentication         => 'yes',
+        pamauthentication          => 'yes',
       },
     }
 
@@ -148,7 +208,7 @@ Options for `pureftpd-mysql.conf`] should be passed into the `config_mysql`
 class parameter as a hash.
 
     class { 'pureftpd':
-      config_mysql               => {
+      config_mysql => {
         mysqlserver              => 'localhost'
         mysqlport                => '3306'
         mysqlsocket              => '/tmp/mysql.sock'
@@ -202,6 +262,132 @@ class parameter as a hash.
     }
 
 ### Canonical Example
+
+    class { 'pureftpd':
+      use_selinux  => true,
+      config       => {
+        ipv4only                   => 'yes',
+        ipv6only                   => 'yes',
+        chrooteveryone             => 'yes',
+        brokenclientscompatibility => 'no',
+        daemonize                  => 'yes',
+        verboselog                 => 'no',
+        displaydotfiles            => 'yes',
+        anonymousonly              => 'no',
+        noanonymous                => 'no',
+        dontresolve                => 'yes',
+        anonymouscancreatedirs     => 'no',
+        natmode                    => 'no',
+        calluploadscript           => 'yes',
+        antiwarez                  => 'yes',
+        allowuserfxp               => 'no',
+        allowanonymousfxp          => 'no',
+        prohibitdotfileswrite      => 'no',
+        prohibitdotfilesread       => 'no',
+        allowdotfiles              => 'no',
+        autorename                 => 'no',
+        anonymouscantupload        => 'no',
+        logpid                     => 'yes',
+        nochmod                    => 'yes',
+        keepallfiles               => 'yes',
+        createhomedir              => 'yes',
+        norename                   => 'yes',
+        customerproof              => 'yes',
+        notruncate                 => 'yes',
+        filesystemcharset          => 'big5',
+        clientcharset              => 'big5',
+        syslogfacility             => 'ftp',
+        fortunesfile               => '/usr/share/fortune/zippy',
+        forcepassiveip             => '192.168.0.1',
+        bind                       => '127.0.0.1,21',
+        anonymousbandwidth         => '8',
+        userbandwidth              => '8',
+        trustedip                  => '10.1.1.1',
+        altlog                     => 'w3c:/var/log/pureftpd.log',
+        pidfile                    => '/var/run/pure-ftpd.pid',
+        tlsciphersuite             => 'HIGH:MEDIUM:+TLSv1:!SSLv2:+SSLv3',
+        maxidletime                => '15',
+        maxdiskusage               => '99',
+        trustedgid                 => '100',
+        maxclientsnumber           => '50',
+        maxclientsperip            => '8',
+        maxload                    => '4',
+        minuid                     => '100',
+        tls                        => '1',
+        limitrecursion             => '10000 8',
+        passiveportrange           => '30000 50000',
+        anonymousratio             => '1 10',
+        userratio                  => '1 10',
+        umask                      => '133:022',
+        quota                      => '1000:10',
+        peruserlimits              => '3:20',
+        ldapconfigfile             => '/etc/pureftpd-ldap.conf',
+        mysqlconfigfile            => '/etc/pureftpd-mysql.conf',
+        pgsqlconfigfile            => '/etc/pureftpd-pgsql.conf',
+        puredb                     => '/etc/pureftpd.pdb',
+        extauth                    => '/var/run/ftpd.sock',
+        unixauthentication         => 'yes',
+        pamauthentication          => 'yes',
+      },
+      config_ldap  => {
+        ldapserver      => 'ldap.example.com',
+        ldapauthmethod  => 'PASSWORD',
+        ldapport        => '389',
+        ldapbinddn      => 'cn=Manager,dc=c9x,dc=org',
+        ldapbindpw      => 'r00tPaSsw0rD',
+        ldapbasedn      => 'cn=Users,dc=c9x,dc=org',
+        ldapfilter      => '(&(objectClass=posixAccount)(uid=\L))',
+        ldaphomedir     => 'homeDirectory',
+        ldapversion     => '3',
+        ldapdefaultuid  => '100',
+        ldapdefaultgid  => '100',
+        ldapusetls      => 'False',
+        ldapauthmethod  => 'PASSWORD',
+      },
+      config_mysql => {
+        mysqlserver              => 'localhost'
+        mysqlport                => '3306'
+        mysqlsocket              => '/tmp/mysql.sock'
+        mysqluser                => 'root'
+        mysqlpassword            => 'rootpw'
+        mysqldatabase            => 'pureftpd'
+        mysqlcrypt               => 'cleartext'
+        mysqltransactions        => 'On'
+        mysqlgetpw               => 'SELECT Password FROM users WHERE User="\L"'
+        mysqlgetuid              => 'SELECT Uid FROM users WHERE User="\L"'
+        mysqldefaultuid          => '1000'
+        mysqlgetgid              => 'SELECT Gid FROM users WHERE User="\L"'
+        mysqldefaultgid          => '1000'
+        mysqlgetdir              => 'SELECT Dir FROM users WHERE User="\L"'
+        mysqlforcetildeexpansion => '0'
+        mysqlgetqtafs            => 'SELECT QuotaFiles FROM users WHERE User="\L"'
+        mysqlgetqtasz            => 'SELECT QuotaSize FROM users WHERE User="\L"'
+        mysqlgetratioul          => 'SELECT ULRatio FROM users WHERE User="\L"'
+        mysqlgetratiodl          => 'SELECT DLRatio FROM users WHERE User="\L"'
+        mysqlgetbandwidthul      => 'SELECT ULBandwidth FROM users WHERE User="\L"'
+        mysqlgetbandwidthdl      => 'SELECT DLBandwidth FROM users WHERE User="\L"'
+      },
+      config_pgsql => {
+        pgsqlserver         => 'localhost',
+        pgsqlport           => '5432',
+        pgsqluser           => 'postgres',
+        pgsqlpassword       => 'rootpw',
+        pgsqldatabase       => 'pureftpd',
+        pgsqlcrypt          => 'cleartext',
+        pgsqlgetpw          => 'SELECT Password FROM users WHERE User=\'\L\'',
+        pgsqlgetuid         => 'SELECT Uid FROM users WHERE User=\'\L\'',
+        pgsqldefaultuid     => '1000',
+        pgsqlgetgid         => 'SELECT Gid FROM users WHERE User=\'\L\'',
+        pgsqldefaultgid     => '1000',
+        pgsqlgetdir         => 'SELECT Dir FROM users WHERE User=\'\L\'',
+        pgsqlgetqtafs       => 'SELECT QuotaFiles FROM users WHERE User=\'\L\'',
+        pgsqlgetqtasz       => 'SELECT QuotaSize FROM users WHERE User=\'\L\'',
+        pgsqlgetratioul     => 'SELECT ULRatio FROM users WHERE User=\'\L\'',
+        pgsqlgetratiodl     => 'SELECT DLRatio FROM users WHERE User=\'\L\'',
+        pgsqlgetbandwidthul => 'SELECT ULBandwidth FROM users WHERE User=\'\L\'',
+        pgsqlgetbandwidthdl => 'SELECT DLBandwidth FROM users WHERE User=\'\L\'',
+      },
+    }
 
 Limitations
 -----------
