@@ -54,11 +54,12 @@ completely as raw strings but this module.  No effort is made to handle
 `boolean` or `integer` values as `pure-ftpd` itself is not consistent in how it
 handles these values.
 
-For example, if you wanted to create the configuration option example below in the file `/etc/pure-ftpd/pure-ftpd.conf`,
+For example, if you wanted to create the configuration option example below in
+the file `/etc/pure-ftpd/pure-ftpd.conf`:
 
     ChrootEveryone yes
 
-You would declare it like this to the puppet module:
+You would declare it like this to the `pureftpd` module:
 
     class { 'pureftpd':
       config => {
@@ -87,7 +88,8 @@ There is a list of command line switches in the distribution's
 [`README`](https://github.com/jedisct1/pure-ftpd/blob/master/README) that
 should all have `pure-ftpd.conf` option analogs.
 
-Here are some useful sources for discovering configuration parameters with examples:
+Here are some useful sources for discovering configuration parameters with
+examples:
 
 * [`pure-ftpd.conf`](https://github.com/jedisct1/pure-ftpd/blob/master/configuration-file/pure-ftpd.conf.in)
 * [`pureftpd-ldap.conf`](https://github.com/jedisct1/pure-ftpd/blob/master/pureftpd-ldap.conf)
@@ -109,8 +111,8 @@ Install the `pure-ftpd` package with an empty `pure-ftpd.conf` config file
 
 ### Setting Configuration Options
 
-Options for `pure-ftpd.conf`] should be passed into the `config` class
-parameter as a hash.
+Options for `pure-ftpd.conf` should be passed into the `config` class parameter
+as a hash.
 
     class { 'pureftpd':
       config => {
@@ -181,7 +183,7 @@ parameter as a hash.
 
 ### Enabling LDAP Authentication
 
-Options for `pureftpd-ldap.conf`] should be passed into the `config_ldap` class
+Options for `pureftpd-ldap.conf` should be passed into the `config_ldap` class
 parameter as a hash.
 
     class { 'pureftpd':
@@ -204,7 +206,7 @@ parameter as a hash.
 
 ### Enabling MYSQL Authentication
 
-Options for `pureftpd-mysql.conf`] should be passed into the `config_mysql`
+Options for `pureftpd-mysql.conf` should be passed into the `config_mysql`
 class parameter as a hash.
 
     class { 'pureftpd':
@@ -235,7 +237,7 @@ class parameter as a hash.
 
 ### Enabling PGSQL Authentication
 
-Options for `pureftpd-pgsql.conf`] should be passed into the `config_pgsql`
+Options for `pureftpd-pgsql.conf` should be passed into the `config_pgsql`
 class parameter as a hash.
 
     class { 'pureftpd':
@@ -401,10 +403,10 @@ support for other platform should be trivial but needs to involve full up
 integration testing.
 
 The supported configuration file values were discovered via code inspection of
-the `pure-ftpd` `v1.0.31` release.  There are possibly new configuration
-values that have been introduced it subsequent releases.  Any configuration
-values present in a `pure-ftpd` but not supported by this module should be
-considered a bug.
+the `pure-ftpd` `v1.0.31` release.  There are possibly new configuration values
+that have been introduced in subsequent releases.  Any configuration values
+present in a stable `pure-ftpd` release but not supported by this module should
+be considered a bug.
 
 ### Tested Platforms
 
