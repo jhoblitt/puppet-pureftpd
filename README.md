@@ -261,7 +261,7 @@ class parameter as a hash.
       },
     }
 
-### Canonical Example
+### Pedantic Example
 
     class { 'pureftpd':
       use_selinux  => true,
