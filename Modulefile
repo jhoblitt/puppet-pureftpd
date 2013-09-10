@@ -1,4 +1,4 @@
-name 'puppet-pureftpd'
+name 'jhoblitt-pureftpd'
 version '1.0.0'
 
 author 'Joshua Hoblitt <jhoblitt@cpan.org>'
