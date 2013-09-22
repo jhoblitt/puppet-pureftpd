@@ -1,5 +1,5 @@
 name 'jhoblitt-pureftpd'
-version '1.0.2'
+version '1.0.3'
 
 author 'Joshua Hoblitt <jhoblitt@cpan.org>'
 license 'Apache + GPLv3'
