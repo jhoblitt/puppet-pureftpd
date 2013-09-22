@@ -7,8 +7,17 @@ Puppet pureftpd Module
 
 1. [Overview](#overview)
 2. [Description](#description)
+    * [Forked](#forked)
 3. [Usage](#usage)
+    * [`pure-ftpd` Options](#pure-ftpd-options)
+    * [Basic Usage](#basic-usage)
+    * [SELinux Support](#selinux-support)
+    * [Setting Configuration Options](#setting-configuration options)
+    * [Enabling LDAP Authentication](#enabling-ldap-authentication)
+    * [Enabling MYSQL Authentication](#enabling-mysql-authentication)
+    * [Enabling PGSQL Authentication](#enabling-pgsql-authentication)
 4. [Limitations](#limitations)
+    * [`stdlib`](#stdlib)
     * [Tested Platforms](#tested-platforms)
 5. [Support](#support)
 
@@ -390,6 +399,7 @@ class parameter as a hash.
         pgsqlgetbandwidthdl => 'SELECT DLBandwidth FROM users WHERE User=\'\L\'',
       },
     }
+
 
 Limitations
 -----------
