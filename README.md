@@ -66,24 +66,30 @@ handles these values.
 For example, if you wanted to create the configuration option example below in
 the file `/etc/pure-ftpd/pure-ftpd.conf`:
 
+```puppet
     ChrootEveryone yes
+```
 
 You would declare it like this to the `pureftpd` module:
 
+```puppet
     class { 'pureftpd':
       config => {
         chrooteveryone => 'yes',
       }
     }
+```
 
 The notable exception to that rule is for these `pure-ftpd.conf` options, which
 should not need to be manually declared.  Passing a hash of configuration
 options to the appropriate class parameter automatically defines these options
 for you.
 
+```puppet
     LDAPConfigFile
     MySQLConfigFile
     PGSQLConfigFile
+```
 
 
 ### `pure-ftpd` Options
@@ -110,19 +116,24 @@ examples:
 Install the `pure-ftpd` package with an empty `pure-ftpd.conf` config file
 (accepting all defaults) and start `pure-ftpd` as a stand alone daemon.
 
+```puppet
     class { 'pureftpd': }
+```
 
 ### SELinux Support
 
+```puppet
     class { 'pureftpd':
       use_selinux => true,
     }
+```
 
 ### Setting Configuration Options
 
 Options for `pure-ftpd.conf` should be passed into the `config` class parameter
 as a hash.
 
+```puppet
     class { 'pureftpd':
       config => {
         ipv4only                   => 'yes',
@@ -189,12 +200,14 @@ as a hash.
         pamauthentication          => 'yes',
       },
     }
+```
 
 ### Enabling LDAP Authentication
 
 Options for `pureftpd-ldap.conf` should be passed into the `config_ldap` class
 parameter as a hash.
 
+```puppet
     class { 'pureftpd':
       config_ldap => {
         ldapserver      => 'ldap.example.com',
@@ -212,12 +225,14 @@ parameter as a hash.
         ldapauthmethod  => 'PASSWORD',
       },
     }
+```
 
 ### Enabling MYSQL Authentication
 
 Options for `pureftpd-mysql.conf` should be passed into the `config_mysql`
 class parameter as a hash.
 
+```puppet
     class { 'pureftpd':
       config_mysql => {
         mysqlserver              => 'localhost'
@@ -243,12 +258,14 @@ class parameter as a hash.
         mysqlgetbandwidthdl      => 'SELECT DLBandwidth FROM users WHERE User="\L"'
       },
     }
+```
 
 ### Enabling PGSQL Authentication
 
 Options for `pureftpd-pgsql.conf` should be passed into the `config_pgsql`
 class parameter as a hash.
 
+```puppet
     class { 'pureftpd':
       config_pgsql => {
         pgsqlserver         => 'localhost',
@@ -271,9 +288,11 @@ class parameter as a hash.
         pgsqlgetbandwidthdl => 'SELECT DLBandwidth FROM users WHERE User=\'\L\'',
       },
     }
+```
 
 ### Pedantic Example
 
+```puppet
     class { 'pureftpd':
       use_selinux  => true,
       config       => {
@@ -399,6 +418,7 @@ class parameter as a hash.
         pgsqlgetbandwidthdl => 'SELECT DLBandwidth FROM users WHERE User=\'\L\'',
       },
     }
+```
 
 
 Limitations
