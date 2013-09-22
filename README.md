@@ -66,7 +66,7 @@ handles these values.
 For example, if you wanted to create the configuration option example below in
 the file `/etc/pure-ftpd/pure-ftpd.conf`:
 
-```puppet
+```
     ChrootEveryone yes
 ```
 
@@ -85,7 +85,7 @@ should not need to be manually declared.  Passing a hash of configuration
 options to the appropriate class parameter automatically defines these options
 for you.
 
-```puppet
+```
     LDAPConfigFile
     MySQLConfigFile
     PGSQLConfigFile
