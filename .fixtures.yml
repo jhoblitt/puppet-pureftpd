@@ -2,6 +2,6 @@ fixtures:
   repositories:
     "stdlib":
       repo: "git://github.com/puppetlabs/puppetlabs-stdlib.git"
-      ref: "f496005bf3db8a5202bf9c16daf9a524b178c67a"
+      ref: "4.0.0"
   symlinks:
     "pureftpd": "#{source_dir}"
