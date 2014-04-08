@@ -28,7 +28,7 @@ describe 'pureftpd::config::pgsql' do
     let(:params) { params }
 
     it do
-      should include_class('pureftpd::config::pgsql') 
+      should contain_class('pureftpd::config::pgsql') 
       should contain_file('/etc/pure-ftpd/pureftpd-pgsql.conf') \
         .with_ensure('file') \
         .with_content(content)
@@ -69,7 +69,7 @@ describe 'pureftpd::config::pgsql' do
     let(:params) {{ :foo => 'bar' }}
 
     it 'should fail' do
-      expect { should include_class('pureftpd::config::pgsql') }.
+      expect { should contain_class('pureftpd::config::pgsql') }.
         to raise_error(Puppet::Error, /Invalid parameter foo/)
     end
   end

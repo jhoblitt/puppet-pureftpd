@@ -72,7 +72,7 @@ describe 'pureftpd::config' do
     let(:params) { params }
 
     it do
-      should include_class('pureftpd::config') 
+      should contain_class('pureftpd::config') 
       should contain_file('/etc/pure-ftpd/pure-ftpd.conf') \
         .with_ensure('file') \
         .with_content(content)
@@ -113,7 +113,7 @@ describe 'pureftpd::config' do
     let(:params) {{ :foo => 'bar' }}
 
     it 'should fail' do
-      expect { should include_class('pureftpd::config') }.
+      expect { should contain_class('pureftpd::config') }.
         to raise_error(Puppet::Error, /Invalid parameter foo/)
     end
   end

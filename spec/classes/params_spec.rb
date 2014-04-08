@@ -4,7 +4,7 @@ describe 'pureftpd::params', :type => :class do
   describe 'for osfamily RedHat' do
     let(:facts) {{ :osfamily => 'RedHat' }}
 
-    it { should include_class('pureftpd::params') }
+    it { should contain_class('pureftpd::params') }
   end
 
   describe 'unsupported osfamily' do
@@ -16,7 +16,7 @@ describe 'pureftpd::params', :type => :class do
     end
   
     it 'should fail' do
-      expect { should include_class('pureftpd::params') }.
+      expect { should contain_class('pureftpd::params') }.
         to raise_error(Puppet::Error, /not supported on Debian/)
     end
   end

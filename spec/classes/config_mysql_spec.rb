@@ -31,7 +31,7 @@ describe 'pureftpd::config::mysql' do
     let(:params) { params }
 
     it do
-      should include_class('pureftpd::config::mysql') 
+      should contain_class('pureftpd::config::mysql') 
       should contain_file('/etc/pure-ftpd/pureftpd-mysql.conf') \
         .with_ensure('file') \
         .with_content(content)
@@ -72,7 +72,7 @@ describe 'pureftpd::config::mysql' do
     let(:params) {{ :foo => 'bar' }}
 
     it 'should fail' do
-      expect { should include_class('pureftpd::config::mysql') }.
+      expect { should contain_class('pureftpd::config::mysql') }.
         to raise_error(Puppet::Error, /Invalid parameter foo/)
     end
   end

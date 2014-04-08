@@ -24,7 +24,7 @@ describe 'pureftpd::config::ldap' do
     let(:params) { params }
 
     it do
-      should include_class('pureftpd::config::ldap') 
+      should contain_class('pureftpd::config::ldap') 
       should contain_file('/etc/pure-ftpd/pureftpd-ldap.conf') \
         .with_ensure('file') \
         .with_content(content)
@@ -65,7 +65,7 @@ describe 'pureftpd::config::ldap' do
     let(:params) {{ :foo => 'bar' }}
 
     it 'should fail' do
-      expect { should include_class('pureftpd::config::ldap') }.
+      expect { should contain_class('pureftpd::config::ldap') }.
         to raise_error(Puppet::Error, /Invalid parameter foo/)
     end
   end

@@ -4,7 +4,7 @@ describe 'pureftpd', :type => :class do
   let(:facts) { {:osfamily=> 'RedHat'} }
 
   describe 'with no params' do
-    it { should include_class('pureftpd') }
+    it { should contain_class('pureftpd') }
     it { should contain_class('pureftpd::install') }
     it do
       should contain_class('pureftpd::config').
@@ -19,7 +19,7 @@ describe 'pureftpd', :type => :class do
   describe 'with $use_selinux => true' do
     let(:params) {{ :use_selinux => true }}
 
-    it { should include_class('pureftpd') }
+    it { should contain_class('pureftpd') }
     it { should contain_class('pureftpd::install').with_use_selinux(true) }
     it do
       should contain_class('pureftpd::config').
@@ -34,7 +34,7 @@ describe 'pureftpd', :type => :class do
   describe 'with $use_selinux => false' do
     let(:params) {{ :use_selinux => false }}
 
-    it { should include_class('pureftpd') }
+    it { should contain_class('pureftpd') }
     it { should contain_class('pureftpd::install').with_use_selinux(false) }
     it do
       should contain_class('pureftpd::config').
@@ -51,7 +51,7 @@ describe 'pureftpd', :type => :class do
 
     it 'should fail' do
       expect {
-        should include_class('pureftpd') 
+        should contain_class('pureftpd') 
       }.to raise_error(Puppet::Error, /is not a boolean/)
     end
   end
@@ -59,7 +59,7 @@ describe 'pureftpd', :type => :class do
   describe 'with $config => {}' do
     let(:params) {{ :config => {} }}
 
-    it { should include_class('pureftpd') }
+    it { should contain_class('pureftpd') }
     it { should contain_class('pureftpd::install') }
     it do
       should contain_class('pureftpd::config').
@@ -79,7 +79,7 @@ describe 'pureftpd', :type => :class do
       }
     }}
 
-    it { should include_class('pureftpd') }
+    it { should contain_class('pureftpd') }
     it { should contain_class('pureftpd::install') }
     it do
       should contain_class('pureftpd::config').
@@ -100,7 +100,7 @@ describe 'pureftpd', :type => :class do
 
     it 'should fail' do
       expect {
-        should include_class('pureftpd') 
+        should contain_class('pureftpd') 
       }.to raise_error(Puppet::Error, /is not a Hash/)
     end
   end
@@ -115,7 +115,7 @@ describe 'pureftpd', :type => :class do
       }
     end
 
-    it { should include_class('pureftpd') }
+    it { should contain_class('pureftpd') }
     it { should contain_class('pureftpd::install') }
     it do
       should contain_class('pureftpd::config').
@@ -139,7 +139,7 @@ describe 'pureftpd', :type => :class do
 
     it 'should fail' do
       expect {
-        should include_class('pureftpd') 
+        should contain_class('pureftpd') 
       }.to raise_error(Puppet::Error, /is not a Hash/)
     end
   end
@@ -154,7 +154,7 @@ describe 'pureftpd', :type => :class do
       }
     end
 
-    it { should include_class('pureftpd') }
+    it { should contain_class('pureftpd') }
     it { should contain_class('pureftpd::install') }
     it do
       should contain_class('pureftpd::config').
@@ -178,7 +178,7 @@ describe 'pureftpd', :type => :class do
 
     it 'should fail' do
       expect {
-        should include_class('pureftpd') 
+        should contain_class('pureftpd') 
       }.to raise_error(Puppet::Error, /is not a Hash/)
     end
   end
@@ -193,7 +193,7 @@ describe 'pureftpd', :type => :class do
       }
     end
 
-    it { should include_class('pureftpd') }
+    it { should contain_class('pureftpd') }
     it { should contain_class('pureftpd::install') }
     it do
       should contain_class('pureftpd::config').
@@ -217,7 +217,7 @@ describe 'pureftpd', :type => :class do
 
     it 'should fail' do
       expect {
-        should include_class('pureftpd') 
+        should contain_class('pureftpd') 
       }.to raise_error(Puppet::Error, /is not a Hash/)
     end
   end
@@ -241,7 +241,7 @@ describe 'pureftpd', :type => :class do
       }
     end
 
-    it { should include_class('pureftpd') }
+    it { should contain_class('pureftpd') }
     it { should contain_class('pureftpd::install') }
     it do
       should contain_class('pureftpd::config').
