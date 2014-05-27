@@ -62,7 +62,7 @@ class pureftpd (
     $enable_ldap = { ldapconfigfile => $pureftpd::params::ldap_conf_path }
 
     # instantiate a pureftpd::config::ldap that will notify the service class
-    $safe_config_ldap = pureftpd_merge($config_ldap,
+    $safe_config_ldap = merge($config_ldap,
       { notify => Class[ 'pureftpd::service' ] }
     )
     create_resources( 'class',
@@ -80,7 +80,7 @@ class pureftpd (
     $enable_mysql = { mysqlconfigfile => $pureftpd::params::mysql_conf_path }
 
     # instantiate a pureftpd::config::mysql that will notify the service class
-    $safe_config_mysql = pureftpd_merge($config_mysql,
+    $safe_config_mysql = merge($config_mysql,
       { notify => Class[ 'pureftpd::service' ] }
     )
     create_resources( 'class',
@@ -98,7 +98,7 @@ class pureftpd (
     $enable_pgsql = { pgsqlconfigfile => $pureftpd::params::pgsql_conf_path }
 
     # instantiate a pureftpd::config::mysql will notify the service class
-    $safe_config_pgsql = pureftpd_merge($config_pgsql,
+    $safe_config_pgsql = merge($config_pgsql,
       { notify => Class[ 'pureftpd::service' ] }
     )
     create_resources( 'class',
@@ -112,7 +112,7 @@ class pureftpd (
     Class[ 'pureftpd::config::pgsql' ]
   }
 
-  $safe_config = pureftpd_merge(
+  $safe_config = merge(
     $config,
     { notify => Class[ 'pureftpd::service' ] },
     $enable_ldap,
