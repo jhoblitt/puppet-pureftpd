@@ -1,5 +1,29 @@
 
 #### [Current]
+ * [554f1a8](../../commit/554f1a8) - __(Joshua Hoblitt)__ add boilerplate Versioning/See Also sections to README
+ * [aee2b37](../../commit/aee2b37) - __(Joshua Hoblitt)__ remove README section on stdlib
+
+This section has not be relevant since commit
+e1962ecd9dc93278121523e3d6d35e740af172ca.
+
+ * [6afbfdc](../../commit/6afbfdc) - __(Joshua Hoblitt)__ add `:require => false` to all Gemfile gems
+ * [aecaa3a](../../commit/aecaa3a) - __(Joshua Hoblitt)__ change .fixtures.yml to use https:// instead of git://
+ * [0fba3b0](../../commit/0fba3b0) - __(Joshua Hoblitt)__ update .gitignore
+ * [dc7b383](../../commit/dc7b383) - __(Joshua Hoblitt)__ Merge pull request [#1](../../issues/1) from jhoblitt/feature/drop_bundled_merge_function
+
+Feature/drop bundled merge function
+ * [68dc8fc](../../commit/68dc8fc) - __(Joshua Hoblitt)__ remove bundled pureftpd_merge() function
+
+The pureftpd_merge() function included in this module is a copy of the
+stdlib merge() function from commit id
+f496005bf3db8a5202bf9c16daf9a524b178c67a.  This version of merge()
+includes a critical bug fix that was commit after the stdlib 4.1.0
+release.  Now that stdlib 4.2.0 has been released (finally!) with the
+needed fix, bundling a version of the merge() function in this module is
+no longer necessary.
+
+#### v1.1.0
+ * [95265a0](../../commit/95265a0) - __(Joshua Hoblitt)__ bump version to v1.1.0
  * [56637b4](../../commit/56637b4) - __(Joshua Hoblitt)__ update travis matrix
  * [e1962ec](../../commit/e1962ec) - __(Joshua Hoblitt)__ give up all hope of a post stdlib 4.1.0 release happening
 
