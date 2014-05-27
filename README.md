@@ -18,7 +18,9 @@ Puppet pureftpd Module
     * [Enabling PGSQL Authentication](#enabling-pgsql-authentication)
 4. [Limitations](#limitations)
     * [Tested Platforms](#tested-platforms)
-5. [Support](#support)
+5. [Versioning](#versioning)
+6. [Support](#support)
+7. [See Also](#see-also)
 
 
 Overview
@@ -442,9 +444,21 @@ be considered a bug.
 * el6.x
 
 
+Versioning
+----------
+
+This module is versioned according to the [Semantic Versioning
+2.0.0](http://semver.org/spec/v2.0.0.html) specification.
+
+
 Support
 -------
 
 Please log tickets and issues at
 [github](https://github.com/jhoblitt/puppet-pureftpd/issues)
 
+
+See Also
+--------
+
+* [`pure-ftpd`](http://www.pureftpd.org/project/pure-ftpd)
