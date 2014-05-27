@@ -17,7 +17,6 @@ Puppet pureftpd Module
     * [Enabling MYSQL Authentication](#enabling-mysql-authentication)
     * [Enabling PGSQL Authentication](#enabling-pgsql-authentication)
 4. [Limitations](#limitations)
-    * [`stdlib`](#stdlib)
     * [Tested Platforms](#tested-platforms)
 5. [Support](#support)
 
@@ -437,14 +436,6 @@ the `pure-ftpd` `v1.0.31` release.  There are possibly new configuration values
 that have been introduced in subsequent releases.  Any configuration values
 present in a stable `pure-ftpd` release but not supported by this module should
 be considered a bug.
-
-### `stdlib` 
-
-This module is dependent upon this patch to the [`merge`
-function](https://github.com/puppetlabs/puppetlabs-stdlib/commit/f496005bf3db8a5202bf9c16daf9a524b178c67a)
-in `stdlib`, which as of 2013-09-22 is not part of a stable `stdlib` release.
-The present latest version is `4.1.0` and presumably the required patch will be
-part of a `4.1.1` or `4.2.0` release.
 
 ### Tested Platforms
 
