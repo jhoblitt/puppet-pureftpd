@@ -46,12 +46,16 @@ class pureftpd (
   $config_ldap  = {},
   $config_mysql = {},
   $config_pgsql = {},
+  $extauth_enabled = false,
+  $extauth_handler = '',
 ) {
   validate_bool($use_selinux)
   validate_hash($config)
   validate_hash($config_ldap)
   validate_hash($config_mysql)
   validate_hash($config_pgsql)
+  validate_bool($extauth_enabled)
+  validate_string($extauth_handler)
 
   include pureftpd::service
 
@@ -112,12 +116,21 @@ class pureftpd (
     Class[ 'pureftpd::config::pgsql' ]
   }
 
+  if extauth_enabled  {
+    $extauth_config = { extauth => $pureftpd::params::authd_socket }
+
+    create_resources('class',
+      {'pureftpd::config::extauth' => {extauth_handler => $extauth_handler}}
+    )
+  }
+
   $safe_config = merge(
     $config,
     { notify => Class[ 'pureftpd::service' ] },
     $enable_ldap,
     $enable_mysql,
-    $enable_pgsql
+    $enable_pgsql,
+    $extauth_config
   )
 
   create_resources( 'class', { 'pureftpd::config' => $safe_config } )

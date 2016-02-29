@@ -1,0 +1,79 @@
+#!/bin/bash
+#
+# Startup script for the pure-authd FTP Server	$Revision: 1.1 $
+#
+# chkconfig: - 85 15
+# description: Pure-FTPd is an FTP auth daemon based upon Troll-FTPd
+# processname: pure-authd
+# pidfile: /var/run/pure-authd.pid
+
+# Source function library.
+. /etc/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is configured.
+[ ${NETWORKING} = "no" ] && exit 0
+
+RETVAL=0
+
+prog="pure-authd"
+
+# Path to the pure-ftp binaries.
+fullpath=/usr/sbin/pure-authd
+pidfile="/var/run/pure-authd.pid"
+pure_config="-p $pidfile -B -s /var/run/ftpd.sock -r <%= @handler_path %>"
+
+
+start() {
+	echo -n $"Starting $prog: "
+	daemon --pidfile $pidfile "$fullpath $pure_config > /dev/null"
+	RETVAL=$?
+	[ $RETVAL = 0 ] && touch /var/lock/subsys/pure-authd
+	echo
+}
+
+stop() {
+	echo -n $"Stopping $prog: "
+	killproc pure-authd
+	RETVAL=$?
+	[ $RETVAL = 0 ] && rm -f /var/lock/subsys/pure-authd
+	echo
+}
+
+# See how we were called.
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		start
+		;;
+	reload)
+		echo -n $"Reloading $prog: "
+		killproc pure-ftpd -HUP
+		RETVAL=$?
+		echo
+		;;
+	condrestart)
+		if [ -f /var/lock/subsys/pure-authd ] ; then
+			stop
+			# avoid race
+			sleep 3
+			start
+		fi
+		;;
+	status)
+		status pure-authd
+		RETVAL=$?
+		;;
+	*)
+		echo $"Usage: pure-authd {start|stop|restart|status}"
+		RETVAL=1
+esac
+exit $RETVAL
