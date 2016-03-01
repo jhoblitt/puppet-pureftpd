@@ -62,6 +62,7 @@ class pureftpd (
   $config_pgsql = {},
   $extauth_enabled = false,
   $extauth_handler = '',
+  $ssl_certificates = '',
 ) {
   validate_bool($use_selinux)
   validate_hash($config)
@@ -70,10 +71,12 @@ class pureftpd (
   validate_hash($config_pgsql)
   validate_bool($extauth_enabled)
   validate_string($extauth_handler)
+  validate_string($ssl_certificates)
 
   include pureftpd::service
 
   class{ 'pureftpd::install': use_selinux => $use_selinux }
+  class{ 'pureftpd::ssl': ssl_certificates => $ssl_certificates}
 
   if ! empty($config_ldap) {
     # insert the path to the ldap conf file into pure-ftpd.conf
@@ -151,6 +154,7 @@ class pureftpd (
 
   Class[ 'pureftpd::install' ] ->
   Class[ 'pureftpd::config' ] ->
+  Class[ 'pureftpd::ssl'] ->
   Class[ 'pureftpd::service' ] ->
   Class[ 'pureftpd' ]
 }
