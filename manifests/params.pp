@@ -23,6 +23,8 @@ class pureftpd::params {
 
       $pgsql_conf_erb  = 'pure-ftpd.conf.erb'
       $pgsql_conf_path = "${config_dir}/pureftpd-pgsql.conf"
+
+      $authd_socket    = '/var/run/ftpd.sock'
     }
     default:{
       fail("Module ${module_name} is not supported on ${::operatingsystem}")

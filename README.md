@@ -16,6 +16,7 @@ Puppet pureftpd Module
     * [Enabling LDAP Authentication](#enabling-ldap-authentication)
     * [Enabling MYSQL Authentication](#enabling-mysql-authentication)
     * [Enabling PGSQL Authentication](#enabling-pgsql-authentication)
+    * [Enabling external authentication](#enabling-external-authentication)
 4. [Limitations](#limitations)
     * [Tested Platforms](#tested-platforms)
 5. [Versioning](#versioning)
@@ -288,6 +289,19 @@ class parameter as a hash.
         pgsqlgetbandwidthul => 'SELECT ULBandwidth FROM users WHERE User=\'\L\'',
         pgsqlgetbandwidthdl => 'SELECT DLBandwidth FROM users WHERE User=\'\L\'',
       },
+    }
+```
+
+### Enabling external authentication
+
+To enable pure-ftpd external authentication use the `extauth_enabled` and `extauth_handler`.
+The `extauth_handler` can be a local path to a file already on the ftp server or a remote
+file from the puppet server if the argument starts with `puppet://`.
+
+```puppet
+    class { 'pureftpd':
+      extauth_enabled         => true,
+      extauth_handler         => 'puppet:///modules/profiles/ftp-auth-handler.py',
     }
 ```
 

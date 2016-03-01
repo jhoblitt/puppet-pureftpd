@@ -29,6 +29,18 @@
 #
 #   Optional, defaults to `{}`.
 #
+# [*extauth_enabled*]
+#   Boolean variable to enable pure-ftpd external authentication
+#
+#   Optional, defaults to false
+#
+# [*extauth_handler*]
+#   Local or remote path (puppet path) to pure-ftpd external authentication handler.
+#   Can refer a local file on the server or copy one from the puppet master if the argument
+#   starts with puppet://
+#
+#   Optional, defaults to `''`
+#
 # === Examples
 #
 #    class { 'pureftpd':
@@ -37,6 +49,8 @@
 #        ipv4only         => 'Yes',
 #        passiveportrange => '49999:59999',
 #      },
+#      extauth_enabled => true,
+#      extauth_handler => 'puppet:///modules/profiles/ftp-auth-handler.py'
 #    }
 #
 #
@@ -46,16 +60,23 @@ class pureftpd (
   $config_ldap  = {},
   $config_mysql = {},
   $config_pgsql = {},
+  $extauth_enabled = false,
+  $extauth_handler = '',
+  $ssl_certificates = '',
 ) {
   validate_bool($use_selinux)
   validate_hash($config)
   validate_hash($config_ldap)
   validate_hash($config_mysql)
   validate_hash($config_pgsql)
+  validate_bool($extauth_enabled)
+  validate_string($extauth_handler)
+  validate_string($ssl_certificates)
 
   include pureftpd::service
 
   class{ 'pureftpd::install': use_selinux => $use_selinux }
+  class{ 'pureftpd::ssl': ssl_certificates => $ssl_certificates}
 
   if ! empty($config_ldap) {
     # insert the path to the ldap conf file into pure-ftpd.conf
@@ -112,18 +133,28 @@ class pureftpd (
     Class[ 'pureftpd::config::pgsql' ]
   }
 
+  if extauth_enabled  {
+    $extauth_config = { extauth => $pureftpd::params::authd_socket }
+
+    create_resources('class',
+      {'pureftpd::config::extauth' => {extauth_handler => $extauth_handler}}
+    )
+  }
+
   $safe_config = merge(
     $config,
     { notify => Class[ 'pureftpd::service' ] },
     $enable_ldap,
     $enable_mysql,
-    $enable_pgsql
+    $enable_pgsql,
+    $extauth_config
   )
 
   create_resources( 'class', { 'pureftpd::config' => $safe_config } )
 
   Class[ 'pureftpd::install' ] ->
   Class[ 'pureftpd::config' ] ->
+  Class[ 'pureftpd::ssl'] ->
   Class[ 'pureftpd::service' ] ->
   Class[ 'pureftpd' ]
 }
