@@ -29,6 +29,18 @@
 #
 #   Optional, defaults to `{}`.
 #
+# [*extauth_enabled*]
+#   Boolean variable to enable pure-ftpd external authentication
+#
+#   Optional, defaults to false
+#
+# [*extauth_handler*]
+#   Local or remote path (puppet path) to pure-ftpd external authentication handler.
+#   Can refer a local file on the server or copy one from the puppet master if the argument
+#   starts with puppet://
+#
+#   Optional, defaults to `''`
+#
 # === Examples
 #
 #    class { 'pureftpd':
@@ -37,6 +49,8 @@
 #        ipv4only         => 'Yes',
 #        passiveportrange => '49999:59999',
 #      },
+#      extauth_enabled => true,
+#      extauth_handler => 'puppet:///modules/profiles/ftp-auth-handler.py'
 #    }
 #
 #
