@@ -23,9 +23,32 @@ class pureftpd::params {
 
       $pgsql_conf_erb  = 'pure-ftpd.conf.erb'
       $pgsql_conf_path = "${config_dir}/pureftpd-pgsql.conf"
+
+      $filegroup       = 'root'
     }
-    default:{
-      fail("Module ${module_name} is not supported on ${::operatingsystem}")
+    'FreeBSD': {
+      $package_name         = 'pure-ftpd'
+      $package_name_selinux = 'pure-ftpd'
+
+      $config_dir      = '/usr/local/etc/'
+      $service_name    = 'pure-ftpd'
+
+      $conf_erb        = 'pure-ftpd.conf.erb'
+      $conf_path       = "${config_dir}/pure-ftpd.conf"
+
+      $ldap_conf_erb   = 'pure-ftpd.conf.erb'
+      $ldap_conf_path  = "${config_dir}/pureftpd-ldap.conf"
+
+      $mysql_conf_erb  = 'pure-ftpd.conf.erb'
+      $mysql_conf_path = "${config_dir}/pureftpd-mysql.conf"
+
+      $pgsql_conf_erb  = 'pure-ftpd.conf.erb'
+      $pgsql_conf_path = "${config_dir}/pureftpd-pgsql.conf"
+
+      $filegroup       = 'wheel'
+   }
+   default:{
+      fail("Module ${module_name} is not supported on ${::operatingsystem} | ${::osfamily}")
     }
   }
 }
