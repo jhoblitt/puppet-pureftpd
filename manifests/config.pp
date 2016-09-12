@@ -138,7 +138,7 @@ class pureftpd::config(
     ensure  => file,
     content => template("${module_name}/${pureftpd::params::conf_erb}"),
     owner   => 'root',
-    group   => 'root',
+    group   => "$filegroup",
     mode    => '0644',
   }
 }
