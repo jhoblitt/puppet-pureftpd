@@ -5,22 +5,22 @@
 #
 #
 class pureftpd::config::ldap (
-  $ldapserver          		= undef,
-  $ldapport            		= undef,
-  $ldapbinddn          		= undef,
-  $ldapbindpw          		= undef,
-  $ldapbasedn          		= undef,
-  $ldapfilter          		= undef,
-  $ldaphomedir         		= undef,
-  $ldapversion         		= undef,
-  $ldapdefaultuid      		= undef,
-  $ldapforcedefaultuid 		= undef,
-  $ldapdefaultgid      		= undef,
-  $ldapforcedefaultgid 		= undef,
-  $ldapusetls          		= undef,
-  $ldapauthmethod      		= undef,
-  $ldapscheme          		= undef,
-  $ldapdefaulthomedirectory	= undef,
+  $ldapserver                   = undef,
+  $ldapport                     = undef,
+  $ldapbinddn                   = undef,
+  $ldapbindpw                   = undef,
+  $ldapbasedn                   = undef,
+  $ldapfilter                   = undef,
+  $ldaphomedir                  = undef,
+  $ldapversion                  = undef,
+  $ldapdefaultuid               = undef,
+  $ldapforcedefaultuid          = undef,
+  $ldapdefaultgid               = undef,
+  $ldapforcedefaultgid          = undef,
+  $ldapusetls                   = undef,
+  $ldapauthmethod               = undef,
+  $ldapscheme                   = undef,
+  $ldapdefaulthomedirectory     = undef,
 ) inherits pureftpd::params {
 
   # options taken from pure-ftpd-1.0.49/src/log_ldap_p.h
