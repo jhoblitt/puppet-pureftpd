@@ -15,6 +15,8 @@ conf_options = [
   'LDAPForceDefaultGID',
   'LDAPUseTLS',
   'LDAPAuthMethod',
+  'LDAPScheme',
+  'LDAPDefaultHomeDirectory',
 ]
 
 describe 'pureftpd::config::ldap' do

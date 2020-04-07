@@ -5,23 +5,25 @@
 #
 #
 class pureftpd::config::ldap (
-  $ldapserver          = undef,
-  $ldapport            = undef,
-  $ldapbinddn          = undef,
-  $ldapbindpw          = undef,
-  $ldapbasedn          = undef,
-  $ldapfilter          = undef,
-  $ldaphomedir         = undef,
-  $ldapversion         = undef,
-  $ldapdefaultuid      = undef,
-  $ldapforcedefaultuid = undef,
-  $ldapdefaultgid      = undef,
-  $ldapforcedefaultgid = undef,
-  $ldapusetls          = undef,
-  $ldapauthmethod      = undef,
+  $ldapserver          		= undef,
+  $ldapport            		= undef,
+  $ldapbinddn          		= undef,
+  $ldapbindpw          		= undef,
+  $ldapbasedn          		= undef,
+  $ldapfilter          		= undef,
+  $ldaphomedir         		= undef,
+  $ldapversion         		= undef,
+  $ldapdefaultuid      		= undef,
+  $ldapforcedefaultuid 		= undef,
+  $ldapdefaultgid      		= undef,
+  $ldapforcedefaultgid 		= undef,
+  $ldapusetls          		= undef,
+  $ldapauthmethod      		= undef,
+  $ldapscheme          		= undef,
+  $ldapdefaulthomedirectory	= undef,
 ) inherits pureftpd::params {
 
-  # options taken from pure-ftpd-1.0.30/src/log_ldap_p.h
+  # options taken from pure-ftpd-1.0.49/src/log_ldap_p.h
   # XXX The options LDAPForceDefaultUID & LDAPForceDefaultGID are non-mainline
   # additions to pure-ftpd.  It is hoped that these will be merged into a
   # future offical release.
@@ -41,6 +43,8 @@ class pureftpd::config::ldap (
     'LDAPForceDefaultGID',
     'LDAPUseTLS',
     'LDAPAuthMethod',
+    'LDAPScheme',
+    'LDAPDefaultHomeDirectory',
   ]
 
   file { $pureftpd::params::ldap_conf_path:
